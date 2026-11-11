@@ -24,8 +24,11 @@
 import logging
 logger = logging.getLogger(__name__)   # noqa: E402
 
-from gi.repository import Gtk as gtk
-from gi.repository import Pango as pango
+try:
+    from gi.repository import Gtk as gtk
+    from gi.repository import Pango as pango
+except (ImportError, ValueError):   # not needed by the service
+    gtk = pango = None
 
 from itertools import groupby
 import calendar

@@ -27,11 +27,14 @@ logger = logging.getLogger(__name__)   # noqa: E402
 import os
 from hamster.client import Storage
 
-from gi.repository import Gdk as gdk
 from gi.repository import Gio as gio
 from gi.repository import GLib as glib
 from gi.repository import GObject as gobject
-from gi.repository import Gtk as gtk
+try:
+    from gi.repository import Gdk as gdk
+    from gi.repository import Gtk as gtk
+except (ImportError, ValueError):   # only the GTK windows need them
+    gdk = gtk = None
 
 import hamster
 

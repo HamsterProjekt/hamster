@@ -1,3 +1,88 @@
+# Hamster - Time Tracker, with a Markdown backend for KDE
+
+This is a fork of [Project Hamster](https://github.com/projecthamster/hamster),
+the time tracker for individuals. It is the backend of a port of Hamster to
+KDE Plasma, and is not an official Project Hamster release.
+
+What the fork adds:
+
+- **A Markdown storage backend.** Facts, activities, categories and tags are
+  kept in plain Markdown files instead of the SQLite database. They can be
+  read and edited by hand, and synchronised between computers.
+- **A service that runs without GTK**, so it can serve other interfaces than
+  Hamster's GTK windows.
+
+The KDE side is in the separate `hamster-kde` repository: a Plasma 6 panel
+widget, and the overview, edit and settings windows written with Qt Quick and
+Kirigami. They talk to the Hamster service of this repository over D-Bus, as
+Hamster's own windows and the GNOME shell extension do.
+
+Everything of Hamster is still here and works as before: the SQLite storage
+stays the default, and the GTK windows are untouched.
+
+## The Markdown backend
+
+The backend is chosen when the service starts:
+
+```bash
+HAMSTER_STORAGE=markdown python3 src/hamster-service.py
+```
+
+With `hamster-kde`, its installer sets this up (the service is then started
+on demand by D-Bus); see the README there.
+
+The files are in `~/.local/share/hamster/markdown`:
+
+    2026-11.md      facts, one file per month
+    activities.md   categories, activities and tags
+
+A month file has one section per hamster day and one list item per fact,
+written as on the hamster command line:
+
+    # 2026-11
+
+    ## 2026-11-11
+
+    - 09:00 - 10:30 coding@work,, login bug, #backend #billable
+    - 10:30 - 11:00 email@work
+    - 11:00 meeting@work
+
+Lines that are not facts are kept where they are. The format, and how the
+backend differs from the SQLite one, is described at the top of
+[`src/hamster/storage/markdown.py`](src/hamster/storage/markdown.py).
+
+### Another folder, several computers
+
+The folder is the `markdown-directory` key of the `org.gnome.Hamster`
+settings (the tracking settings of `hamster-kde` have a button for it); the
+`HAMSTER_MARKDOWN_DIR` environment variable overrides it. It can be a folder
+synchronised by OneDrive, Dropbox, Nextcloud or the like.
+
+The running service follows the files: when another program changes them,
+for instance a sync client bringing in what was tracked on another computer,
+the clients are told and show the new state. Files are written atomically
+and read again before each change.
+
+There is no locking. Change things on one computer at a time: if two of them
+write the same month before the sync client has caught up, entries of one
+can be lost, or end up in a conflict copy that Hamster does not read.
+
+### Limitations
+
+- There is no migration from an existing SQLite database.
+- Fact ids are not kept across restarts of the service.
+- Hamster's GTK preferences window has no control for the folder.
+
+### Tests
+
+```bash
+python3 -m unittest tests.test_markdown_storage
+```
+
+---
+
+The rest of this README is that of Project Hamster.
+
 # Hamster - The Gnome Time Tracker
 
 Hamster is time tracking for individuals. It helps you to keep track of how
