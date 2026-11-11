@@ -21,6 +21,9 @@ Hamster's own windows and the GNOME shell extension do.
 Everything of Hamster is still here and works as before: the SQLite storage
 stays the default, and the GTK windows are untouched.
 
+To install the fork, see [INSTALL.md](INSTALL.md). The packages named
+further down are those of upstream Hamster, without the Markdown backend.
+
 ## The Markdown backend
 
 The backend is chosen when the service starts:
