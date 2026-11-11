@@ -18,5 +18,17 @@
                 then the activity belongs to the previous hamster day.
             </description>
         </key>
+
+        <key type="s" name="markdown-directory">
+            <default>""</default>
+            <summary>Folder of the Markdown storage</summary>
+            <description>
+                Where the Markdown storage keeps its files,
+                for instance a folder synchronised with other computers.
+                Empty for the default location
+                (hamster/markdown in the user data directory).
+                Only used when the service runs with HAMSTER_STORAGE=markdown.
+            </description>
+        </key>
     </schema>
 </schemalist>

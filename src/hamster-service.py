@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # nicked off gwibber
 
+import os
+
 import dbus
 import dbus.service
 
@@ -12,7 +14,12 @@ from hamster import logger as hamster_logger
 from hamster.lib import i18n
 i18n.setup_i18n()  # noqa: E402
 
-from hamster.storage import db
+# The storage backend is chosen with the HAMSTER_STORAGE environment variable:
+# "sqlite" (default) or "markdown" (see hamster/storage/markdown.py).
+if os.environ.get("HAMSTER_STORAGE", "sqlite").lower() == "markdown":
+    from hamster.storage import markdown as backend
+else:
+    from hamster.storage import db as backend
 from hamster.lib import datetime as dt
 from hamster.lib import default_logger
 from hamster.lib.dbus import (
@@ -38,7 +45,7 @@ if "org.gnome.Hamster" in dbus.SessionBus().list_names():
     quit()
 
 
-class Storage(db.Storage, dbus.service.Object):
+class Storage(backend.Storage, dbus.service.Object):
     __dbus_object_path__ = "/org/gnome/Hamster"
 
     def __init__(self, loop):
@@ -47,7 +54,7 @@ class Storage(db.Storage, dbus.service.Object):
 
 
         dbus.service.Object.__init__(self, bus_name, self.__dbus_object_path__)
-        db.Storage.__init__(self, unsorted_localized="")
+        backend.Storage.__init__(self, unsorted_localized="")
 
         self.mainloop = loop
 
