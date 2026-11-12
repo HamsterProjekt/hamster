@@ -343,6 +343,15 @@ class datetime(pdt.datetime):
         return cls.from_pdt(pdt.datetime.now())
 
     @classmethod
+    def from_utc_timestamp(cls, timestamp):
+        """Naive datetime from a timestamp, read in UTC.
+
+        Same result as the utcfromtimestamp method,
+        which is deprecated since Python 3.12.
+        """
+        return cls.from_pdt(pdt.datetime.fromtimestamp(timestamp, pdt.timezone.utc))
+
+    @classmethod
     def parse(cls, s, default_day=None):
         """Parse a datetime from text.
 
