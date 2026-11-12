@@ -1,5 +1,12 @@
 # Hamster - Time Tracker, with a Markdown backend for KDE
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=HamsterProjekt_hamster&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=HamsterProjekt_hamster)
+[![AI Code Assurance](https://sonarcloud.io/api/project_badges/ai_code_assurance?project=HamsterProjekt_hamster)](https://sonarcloud.io/summary/new_code?id=HamsterProjekt_hamster)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=HamsterProjekt_hamster&metric=coverage)](https://sonarcloud.io/summary/new_code?id=HamsterProjekt_hamster)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=HamsterProjekt_hamster&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=HamsterProjekt_hamster)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=HamsterProjekt_hamster&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=HamsterProjekt_hamster)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=HamsterProjekt_hamster&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=HamsterProjekt_hamster)
+
 This is the [HamsterProjekt](https://github.com/HamsterProjekt) fork of
 [Project Hamster](https://github.com/projecthamster/hamster), the time
 tracker for individuals. It is the backend of a port of Hamster to KDE
