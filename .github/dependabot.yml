@@ -1,0 +1,14 @@
+# Dependabot keeps the GitHub Actions of the workflows up to date, in one
+# pull request a week. It can't update the Flatpak manifest, whose modules
+# are updated by hand.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ["*"]
+    commit-message:
+      prefix: CI
