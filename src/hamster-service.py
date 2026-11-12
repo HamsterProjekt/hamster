@@ -450,6 +450,23 @@ class Storage(backend.Storage, dbus.service.Object):
         return hamster.__version__
 
 
+    @dbus.service.method("io.github.HamsterProjekt.Hamster", out_signature='(ss)')
+    def GetStorage(self):
+        """Where the facts are kept: ("markdown", folder) or ("sqlite", database file).
+
+        So that a client can tell whether the service that answers is the
+        one it expects (another installation of Hamster may own the name).
+        """
+        return storage_description(self)
+
+
+def storage_description(storage):
+    """(kind, location) of the storage of the service."""
+    if backend.__name__.endswith(".markdown"):
+        return ("markdown", storage.directory)
+    return ("sqlite", storage.db_path)
+
+
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(description="Hamster time tracker D-Bus service")
@@ -471,9 +488,10 @@ if __name__ == '__main__':
     storage = Storage(loop)
     # printed, not logged: it has to show in the journal at the default level,
     # which is where to look when the facts end up in an unexpected place
-    if backend.__name__.endswith(".markdown"):
-        print("storage: Markdown files in '{}'".format(storage.directory), flush=True)
+    kind, location = storage_description(storage)
+    if kind == "markdown":
+        print("storage: Markdown files in '{}'".format(location), flush=True)
     else:
         print("storage: SQLite database '{}' (HAMSTER_STORAGE is not \"markdown\")"
-              .format(storage.db_path), flush=True)
+              .format(location), flush=True)
     loop.run()

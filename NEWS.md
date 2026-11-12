@@ -11,6 +11,10 @@ HamsterProjekt fork:
   see "Upgrading from the old names" in INSTALL.md.
 * A storage backend that keeps everything in Markdown files, and a service
   that runs without GTK.
+* The service tells which storage it uses: the D-Bus method `GetStorage`
+  returns `("markdown", folder)` or `("sqlite", database file)`. A client
+  can check with it that the service answering is the one it expects, when
+  another installation of Hamster (another Flatpak, say) may own the name.
 
 
 ## Changes in 3.0.3 (2023-11-19)

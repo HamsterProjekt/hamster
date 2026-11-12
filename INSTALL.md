@@ -138,6 +138,12 @@ what the hamster-kde installer does for the service, by hand.
    dbus-send --session --print-reply --dest=io.github.HamsterProjekt.Hamster /io/github/HamsterProjekt/Hamster io.github.HamsterProjekt.Hamster.Version
    ```
 
+   This one prints the storage it uses, and where:
+
+   ```bash
+   dbus-send --session --print-reply --dest=io.github.HamsterProjekt.Hamster /io/github/HamsterProjekt/Hamster io.github.HamsterProjekt.Hamster.GetStorage
+   ```
+
    Facts are then written to `~/.local/share/hamster/markdown`; the
    [README](README.md#another-folder-several-computers) says how to use
    another folder.
