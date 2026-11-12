@@ -33,18 +33,18 @@ migration.
 
 ## With hamster-kde
 
-The installer of [hamster-kde](https://github.com/atterdag/hamster-kde) sets
+The installer of [hamster-kde](https://github.com/HamsterProjekt/hamster-kde) sets
 up the service of this repository together with the widget and the windows.
 Follow its
-[INSTALL.md](https://github.com/atterdag/hamster-kde/blob/main/INSTALL.md);
+[INSTALL.md](https://github.com/HamsterProjekt/hamster-kde/blob/main/INSTALL.md);
 in short:
 
 ```bash
-git clone https://github.com/atterdag/hamster.git ~/projects/hamster
+git clone https://github.com/HamsterProjekt/hamster.git ~/projects/hamster
 ```
 
 ```bash
-git clone https://github.com/atterdag/hamster-kde.git ~/projects/hamster-kde
+git clone https://github.com/HamsterProjekt/hamster-kde.git ~/projects/hamster-kde
 ```
 
 ```bash
@@ -68,7 +68,7 @@ what the hamster-kde installer does for the service, by hand.
 2. Get the source. Keep the checkout: the service runs from it.
 
    ```bash
-   git clone https://github.com/atterdag/hamster.git ~/projects/hamster
+   git clone https://github.com/HamsterProjekt/hamster.git ~/projects/hamster
    ```
 
 3. Install Hamster's settings schema for your user. The service does not

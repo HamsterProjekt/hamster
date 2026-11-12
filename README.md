@@ -13,7 +13,7 @@ What the fork adds:
   Hamster's GTK windows.
 
 The KDE side is in the separate
-[hamster-kde](https://github.com/atterdag/hamster-kde) repository: a Plasma 6 panel
+[hamster-kde](https://github.com/HamsterProjekt/hamster-kde) repository: a Plasma 6 panel
 widget, and the overview, edit and settings windows written with Qt Quick and
 Kirigami. They talk to the Hamster service of this repository over D-Bus, as
 Hamster's own windows and the GNOME shell extension do.
@@ -32,7 +32,7 @@ The backend is chosen when the service starts:
 HAMSTER_STORAGE=markdown python3 src/hamster-service.py
 ```
 
-With [hamster-kde](https://github.com/atterdag/hamster-kde), its installer sets this up (the service is then started
+With [hamster-kde](https://github.com/HamsterProjekt/hamster-kde), its installer sets this up (the service is then started
 on demand by D-Bus); see the README there.
 
 The files are in `~/.local/share/hamster/markdown`:
