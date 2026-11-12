@@ -5,6 +5,8 @@
 # On every merge to main, .github/workflows/flatpak.yml builds it and
 # publishes the bundle as a release.
 app-id: io.github.HamsterProjekt.Hamster
+# the branch Flatpak installs it on (flatpak's default would be "master")
+branch: stable
 runtime: org.gnome.Platform
 runtime-version: '45'
 sdk: org.gnome.Sdk
@@ -38,11 +40,12 @@ modules:
   - "./waf build"
   - "./waf install"
   sources:
-  # this checkout (the manifest is in flatpak/)
+  # this checkout (the manifest is in flatpak/), with its .git so that
+  # the version comes from `git describe` (see src/hamster/version.py)
+  # rather than from the "unreleased" in src/hamster/VERSION
   - type: dir
     path: ".."
     skip:
-    - .git
     - build
     - .waf3-*
     - .flatpak-builder

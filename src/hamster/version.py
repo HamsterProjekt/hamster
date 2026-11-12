@@ -18,8 +18,9 @@ def get_uninstalled_version():
     rc, output = getstatusoutput("git describe --tags --always --dirty=+")
     if rc == 0:
         import re
-        # Strip "v" prefix that is used in git tags
-        return re.sub(r'^v', '', output.strip())
+        # Strip the prefix of the git tags: "v" on releases, "flatpak-"
+        # on the Flatpak builds that CI publishes
+        return re.sub(r'^(v|flatpak-)', '', output.strip())
     else:
         from pathlib import Path
         with open(Path(__file__).parent / 'VERSION', 'r') as f:
