@@ -4,9 +4,6 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="hamster" />
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js"></script>
-    <link type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/base/jquery-ui.css" rel="stylesheet" />
 
 
     <title>$title</title>
@@ -141,6 +138,26 @@
     <script type="text/javascript">
         var facts = $facts;
 
+        // small helpers, in place of jQuery
+        function element(tag, className, text) {
+            var el = document.createElement(tag);
+            if (className)
+                el.className = className;
+            if (text !== undefined)
+                el.textContent = text;
+            return el;
+        }
+
+        function bar() {
+            // a bar of the charts, with a non-breaking space in it
+            return element("div", "bar", " ");
+        }
+
+        function hours(seconds) {
+            // round to one decimal
+            return Math.round(seconds / 60 / 60 * 10) / 10;
+        }
+
         function showChart(target, data) {
             var totals = [];
             // turn object into a list of tuples and convert durations from seconds to hours
@@ -153,44 +170,35 @@
             }
 
             // sort by duration descending
-            totals.sort(function compare(a,b) {return b[1] - a[1]})
+            totals.sort(function compare(a,b) {return b[1] - a[1]});
 
             // create the HTML
-            var table = $("<table class='chart' style='width:100%' />")
+            var table = element("table", "chart");
+            table.style.width = "100%";
             for (var i=0; i < totals.length; i++) {
                 var total = totals[i];
 
-                var row = $("<tr />");
-                var label = $("<td />");
+                var row = element("tr");
+                row.appendChild(element("td", null, total[0]));
+                row.appendChild(element("td", null, Math.round(total[1] * 10) / 10));
 
-                label.text(total[0]);
-                row.append(label);
+                var bar_col = element("td", "bar_col");
+                var chart_bar = bar();
+                chart_bar.style.width = (total[1] / max_duration * 100) + "px";
+                bar_col.appendChild(chart_bar);
+                row.appendChild(bar_col);
 
-
-                var duration = Math.round(total[1] * 10) / 10; // round to one decimal
-                var duration_label = $("<td />");
-                duration_label.text(duration);
-                row.append(duration_label);
-
-
-                var bar_col = $("<td class='bar_col' />");
-                var bar = $("<div class='bar'>&nbsp;</div>");
-                bar.width(total[1] / max_duration * 100);
-                bar_col.append(bar);
-                row.append(bar_col);
-
-                table.append(row);
+                table.appendChild(row);
             }
 
-            target.append(table);
-
+            target.appendChild(table);
         }
 
-        $(document).ready(function() {
+        document.addEventListener("DOMContentLoaded", function() {
             var categoryTotals = {};
             var activityTotals = {};
             var tagTotals = {};
-            var dateTotals = {}
+            var dateTotals = {};
 
             function add(list, key, value) {
                 list[key] = list[key] || 0;
@@ -201,25 +209,22 @@
             for (var i=0; i < facts.length; i++) {
                 var fact = facts[i];
 
-                add(dateTotals, fact.date, fact.delta)
-                add(categoryTotals, fact.category, fact.delta)
-                add(activityTotals, fact.activity, fact.delta)
+                add(dateTotals, fact.date, fact.delta);
+                add(categoryTotals, fact.category, fact.delta);
+                add(activityTotals, fact.activity, fact.delta);
 
                 for (var j=0; j < fact.tags.length; j++) {
-                    add(tagTotals, fact.tags[j], fact.delta)
+                    add(tagTotals, fact.tags[j], fact.delta);
                 }
 
                 grandTotal += fact.delta;
             }
 
-            grandTotal = Math.round(grandTotal / 60 / 60 * 10) / 10;
-            $("#grand_total").text("(" + grandTotal + ")");
+            document.getElementById("grand_total").textContent = "(" + hours(grandTotal) + ")";
 
-
-
-            showChart($("#category_chart"), categoryTotals)
-            showChart($("#activity_chart"), activityTotals)
-            showChart($("#tag_chart"), tagTotals)
+            showChart(document.getElementById("category_chart"), categoryTotals);
+            showChart(document.getElementById("activity_chart"), activityTotals);
+            showChart(document.getElementById("tag_chart"), tagTotals);
 
 
             // create the by-day chart
@@ -228,80 +233,81 @@
 
             var dates = [];
             var dateMax = 0;
-            for (var i=startDate; i <= endDate; i += 24 * 60 * 60) {
-                var duration = dateTotals[i] || 0;
+            for (var day=startDate; day <= endDate; day += 24 * 60 * 60) {
+                var duration = dateTotals[day] || 0;
                 dateMax = Math.max(dateMax, duration);
-                dates.push([new Date(i), duration])
+                dates.push([new Date(day), duration]);
             }
 
-            var table = $("<table />")
-            var row = $("<tr />");
-            for (var i=0; i<dates.length; i++) {
-                var date = dates[i];
-                var col = $("<td />");
-
-                var bar = $("<div class='bar'>&nbsp;</div>");
-                var bar_height = date[1] / dateMax * 70;
-                if (bar_height < 1)
-                    bar.height(1);
-                else
-                    bar.height(bar_height)
-
-                col.append(bar);
-                row.append(col);
+            var table = element("table");
+            var row = element("tr");
+            for (var d=0; d < dates.length; d++) {
+                var col = element("td");
+                var day_bar = bar();
+                var bar_height = dates[d][1] / dateMax * 70;
+                day_bar.style.height = (bar_height < 1 ? 1 : bar_height) + "px";
+                col.appendChild(day_bar);
+                row.appendChild(col);
             }
-            table.append(row);
-            $("#date_chart").append(table);
+            table.appendChild(row);
+            document.getElementById("date_chart").appendChild(table);
 
 
-
-            $("#activity_log_link").click(function() {
-                $("#activity_log").toggle();
-                return false;
-            })
+            document.getElementById("activity_log_link").addEventListener("click", function(event) {
+                var log = document.getElementById("activity_log");
+                var hidden = getComputedStyle(log).display == "none";
+                log.style.display = hidden ? "block" : "none";
+                event.preventDefault();
+            });
 
             populateFactTable();
 
-
-            $(".by_day_controls input").click(function(){
-                populateFactTable();
-            });
+            var controls = document.querySelectorAll(".by_day_controls input");
+            for (var c=0; c < controls.length; c++) {
+                controls[c].addEventListener("click", populateFactTable);
+            }
         });
 
 
+        function addRow(table, cell, first, second) {
+            var row = element("tr");
+            row.appendChild(element(cell, null, first));
+            row.appendChild(element(cell, null, second));
+            table.appendChild(row);
+        }
+
         function populateFactTable() {
             // fill fact rows
-            var table = $("#date_facts");
-            table.empty();
+            var table = document.getElementById("date_facts");
+            table.textContent = "";
 
             var dateFacts = $date_facts;
 
             // determine if we will be doing any internal counting
             var keys = [];
-            if ($("#show_activities")[0].checked)
+            if (document.getElementById("show_activities").checked)
                 keys.push("activity");
 
-            if ($("#show_categories")[0].checked)
+            if (document.getElementById("show_categories").checked)
                 keys.push("category");
 
-            if ($("#show_tags")[0].checked)
+            if (document.getElementById("show_tags").checked)
                 keys.push("tags");
-
 
 
             for (var i in dateFacts) {
                 var dateString = dateFacts[i][0];
                 var dateTotal = 0;
 
-                var factTotals = {}
+                var factTotals = {};
                 for (var j in dateFacts[i][1]) {
                     var fact = dateFacts[i][1][j];
-                    fact.tags = fact.tags.join(", ");
 
                     if (keys.length > 0) {
                         var key = [];
                         for (var k in keys) {
-                            key.push(fact[keys[k]])
+                            var value = fact[keys[k]];
+                            key.push(keys[k] == "tags" ? value.join(", ") : value);
                         }
 
                         key = key.join(" - ");
@@ -309,19 +315,14 @@
                         factTotals[key] += fact.delta;
                     }
 
-
                     dateTotal += fact.delta;
                 }
 
-                dateTotal = Math.round(dateTotal / 60 / 60 * 10) / 10;
-                table.append("<tr><th>" + dateString + "</th><th>" + dateTotal +"</th></tr>");
+                addRow(table, "th", dateString, hours(dateTotal));
 
-                for (var key in factTotals) {
-                    var keyTotal = Math.round(factTotals[key] / 60 / 60 * 10) / 10;
-                    table.append("<tr><td>" + key + "</td><td>" + keyTotal +"</td></tr>");
+                for (var total in factTotals) {
+                    addRow(table, "td", total, hours(factTotals[total]));
                 }
-
-
             }
         }
     </script>
