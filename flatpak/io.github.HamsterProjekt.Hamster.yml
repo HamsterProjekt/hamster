@@ -1,5 +1,10 @@
----
-app-id: org.gnome.Hamster
+# Flatpak of Hamster: the service (SQLite storage by default) and its GTK
+# windows, built from this checkout.
+#
+# Build and install for your user:   flatpak/build.sh
+# On every merge to main, .github/workflows/flatpak.yml builds it and
+# publishes the bundle as a release.
+app-id: io.github.HamsterProjekt.Hamster
 runtime: org.gnome.Platform
 runtime-version: '45'
 sdk: org.gnome.Sdk
@@ -33,12 +38,19 @@ modules:
   - "./waf build"
   - "./waf install"
   sources:
+  # this checkout (the manifest is in flatpak/)
   - type: dir
     path: ".."
+    skip:
+    - .git
+    - build
+    - .waf3-*
+    - .flatpak-builder
+    - hamster.flatpak
 finish-args:
 - "--socket=wayland"
 - "--socket=fallback-x11"
 - "--filesystem=xdg-documents"
-- "--own-name=org.gnome.Hamster"
-- "--own-name=org.gnome.Hamster.GUI"
-- "--own-name=org.gnome.Hamster.WindowServer"
+- "--own-name=io.github.HamsterProjekt.Hamster"
+- "--own-name=io.github.HamsterProjekt.Hamster.GUI"
+- "--own-name=io.github.HamsterProjekt.Hamster.WindowServer"

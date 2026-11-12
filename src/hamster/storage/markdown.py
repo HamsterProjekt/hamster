@@ -84,7 +84,7 @@ SETTLE_MS = 500
 POLL_SECONDS = 30
 
 
-SETTINGS_SCHEMA = "org.gnome.Hamster"
+SETTINGS_SCHEMA = "io.github.HamsterProjekt.Hamster"
 DIRECTORY_KEY = "markdown-directory"
 INDEX_FILE = "activities.md"
 MONTH_FILE_RE = re.compile(r"^(\d{4})-(\d{2})\.md$")

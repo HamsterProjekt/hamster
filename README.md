@@ -1,8 +1,9 @@
 # Hamster - Time Tracker, with a Markdown backend for KDE
 
-This is a fork of [Project Hamster](https://github.com/projecthamster/hamster),
-the time tracker for individuals. It is the backend of a port of Hamster to
-KDE Plasma, and is not an official Project Hamster release.
+This is the [HamsterProjekt](https://github.com/HamsterProjekt) fork of
+[Project Hamster](https://github.com/projecthamster/hamster), the time
+tracker for individuals. It is the backend of a port of Hamster to KDE
+Plasma, and is not an official Project Hamster release.
 
 What the fork adds:
 
@@ -13,27 +14,57 @@ What the fork adds:
   Hamster's GTK windows.
 
 The KDE side is in the separate
-[hamster-kde](https://github.com/atterdag/hamster-kde) repository: a Plasma 6 panel
+[hamster-kde](https://github.com/HamsterProjekt/hamster-kde) repository: a Plasma 6 panel
 widget, and the overview, edit and settings windows written with Qt Quick and
 Kirigami. They talk to the Hamster service of this repository over D-Bus, as
-Hamster's own windows and the GNOME shell extension do.
+Hamster's own windows do.
 
 Everything of Hamster is still here and works as before: the SQLite storage
 stays the default, and the GTK windows are untouched.
 
+The fork has its own names, so it no longer claims upstream Hamster's:
+the D-Bus services, the settings schema, the application and the icon are
+`io.github.HamsterProjekt.Hamster` (and `.GUI`, `.WindowServer`) instead of
+upstream's `org.gnome.Hamster`. Clients written for upstream, such as the
+GNOME shell extension, do not see the fork's service.
+
 To install the fork, see [INSTALL.md](INSTALL.md). The packages named
 further down are those of upstream Hamster, without the Markdown backend.
 
-## The Markdown backend
+## Choosing the storage: SQLite or Markdown
 
-The backend is chosen when the service starts:
+The service has two storage backends. Which one it uses is decided by the
+`HAMSTER_STORAGE` environment variable when the service starts:
+
+| `HAMSTER_STORAGE` | Storage | Where the data is |
+|---|---|---|
+| not set, or anything but `markdown` | SQLite (the default, as upstream) | `~/.local/share/hamster/hamster.db` |
+| `markdown` | Markdown files | `~/.local/share/hamster/markdown/` |
 
 ```bash
-HAMSTER_STORAGE=markdown python3 src/hamster-service.py
+python3 src/hamster-service.py                            # SQLite
 ```
 
-With [hamster-kde](https://github.com/atterdag/hamster-kde), its installer sets this up (the service is then started
-on demand by D-Bus); see the README there.
+```bash
+HAMSTER_STORAGE=markdown python3 src/hamster-service.py   # Markdown
+```
+
+On startup the service prints which one it uses, for instance
+`storage: SQLite database '/home/you/.local/share/hamster/hamster.db'`.
+
+Normally you do not start the service yourself: D-Bus starts it on demand
+from the `Exec` line of a service file. The installer of
+[hamster-kde](https://github.com/HamsterProjekt/hamster-kde) and the
+per-user steps in [INSTALL.md](INSTALL.md) write that file with
+`HAMSTER_STORAGE=markdown`. See
+[Switching between SQLite and Markdown](INSTALL.md#switching-between-sqlite-and-markdown)
+to change it.
+
+The two backends do not share data, and there is no migration in either
+direction: switching starts you on an empty (or the other) set of facts.
+Nothing is deleted, so switching back brings the old data back.
+
+## The Markdown backend
 
 The files are in `~/.local/share/hamster/markdown`:
 
@@ -57,7 +88,7 @@ backend differs from the SQLite one, is described at the top of
 
 ### Another folder, several computers
 
-The folder is the `markdown-directory` key of the `org.gnome.Hamster`
+The folder is the `markdown-directory` key of the `io.github.HamsterProjekt.Hamster`
 settings (the tracking settings of `hamster-kde` have a button for it); the
 `HAMSTER_MARKDOWN_DIR` environment variable overrides it. It can be a folder
 synchronised by OneDrive, Dropbox, Nextcloud or the like.
@@ -237,11 +268,11 @@ If familiar with github, just clone the repo and `cd` into it.
 
 ##### Download
 
-Otherwise, to get the `master` development branch (intended to be quite stable):
+Otherwise, to get the `main` development branch (intended to be quite stable):
 ```bash
-wget https://github.com/projecthamster/hamster/archive/master.zip
-unzip master.zip
-cd hamster-master
+wget https://github.com/HamsterProjekt/hamster/archive/main.zip
+unzip main.zip
+cd hamster-main
 ```
 or a specific [release](https://github.com/projecthamster/hamster/releases):
 ```bash
@@ -265,18 +296,30 @@ Now restart your panels/docks and you should be able to add Hamster!
 
 ##### Flatpak
 
-Alternatively, you can also build a sandboxed
-[flatpak](https://www.flatpak.org/) yourself. You might need to install the
-GNOME SDK beforehand (an error will notify you about it, if needed). Execute:
+Alternatively, you can build a sandboxed [flatpak](https://www.flatpak.org/)
+yourself. It needs `flatpak-builder`; the GNOME SDK is downloaded from
+Flathub on the first build. Execute:
 
 ```bash
-flatpak-builder --force-clean --user --install \
-    build/flatpak data/org.gnome.Hamster.flatpak.yml
+flatpak/build.sh
 ```
 
-This creates a temporary flatpack build folder in the ``build/flatpak``
-directory. Once the app is installed, the whole ``build/flatpack/`` directory
-can be removed.
+This builds in ``~/.cache/hamster-flatpak`` and installs the flatpak for your
+user. `flatpak/build.sh --bundle` also writes `hamster.flatpak`, a single
+file to install on another computer; `flatpak/build.sh --help` lists the
+options.
+
+Every merge to `main` also builds the flatpak on GitHub and publishes it as a
+release. The latest one installs with:
+
+```bash
+wget https://github.com/HamsterProjekt/hamster/releases/latest/download/hamster.flatpak
+flatpak install --user hamster.flatpak
+```
+
+The flatpak built from this repository is `io.github.HamsterProjekt.Hamster`.
+The commands below that name `org.gnome.Hamster` are for upstream's
+Flathub package; use the fork's id instead for the one you built.
 
 #### Uninstall
 
@@ -343,8 +386,7 @@ run:
 To run the tests inside the flatpak, use:
 
 ```bash
-flatpak-builder --run build/flatpak data/org.gnome.Hamster.flatpak.yml \
-    python3 -m unittest
+flatpak/build.sh --test
 ```
 
 #### Migrating
@@ -376,13 +418,13 @@ sudo ./waf uninstall
 
 ## Contributing
 
-1. [Fork](https://github.com/projecthamster/hamster/fork) this project
+1. [Fork](https://github.com/HamsterProjekt/hamster/fork) this project
 2. Create a topic branch - `git checkout -b my_branch`
 3. Push to your branch - `git push origin my_branch`
-4. Submit a [Pull Request](https://github.com/projecthamster/hamster/pulls) with your branch
+4. Submit a [Pull Request](https://github.com/HamsterProjekt/hamster/pulls) with your branch
 5. That's it!
 
-See [How to contribute](https://github.com/projecthamster/hamster/wiki/How-to-contribute) for more information.
+See [How to contribute](https://github.com/HamsterProjekt/.github/blob/main/CONTRIBUTING.md) for more information.
 
 
 ## History

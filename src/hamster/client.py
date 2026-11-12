@@ -3,20 +3,20 @@
 # Copyright (C) 2007 Patryk Zawadzki <patrys at pld-linux.org>
 # Copyright (C) 2007-2009 Toms Baugis <toms.baugis@gmail.com>
 
-# This file is part of Project Hamster.
+# This file is part of HamsterProjekt.
 
-# Project Hamster is free software: you can redistribute it and/or modify
+# HamsterProjekt is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 
-# Project Hamster is distributed in the hope that it will be useful,
+# HamsterProjekt is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with Project Hamster.  If not, see <http://www.gnu.org/licenses/>.
+# along with HamsterProjekt.  If not, see <http://www.gnu.org/licenses/>.
 
 
 import dbus
@@ -68,13 +68,13 @@ class Storage(gobject.GObject):
         self.bus = dbus.SessionBus()
         self._connection = None # will be initiated on demand
 
-        self.bus.add_signal_receiver(self._on_tags_changed, 'TagsChanged', 'org.gnome.Hamster')
-        self.bus.add_signal_receiver(self._on_facts_changed, 'FactsChanged', 'org.gnome.Hamster')
-        self.bus.add_signal_receiver(self._on_activities_changed, 'ActivitiesChanged', 'org.gnome.Hamster')
-        self.bus.add_signal_receiver(self._on_toggle_called, 'ToggleCalled', 'org.gnome.Hamster')
+        self.bus.add_signal_receiver(self._on_tags_changed, 'TagsChanged', 'io.github.HamsterProjekt.Hamster')
+        self.bus.add_signal_receiver(self._on_facts_changed, 'FactsChanged', 'io.github.HamsterProjekt.Hamster')
+        self.bus.add_signal_receiver(self._on_activities_changed, 'ActivitiesChanged', 'io.github.HamsterProjekt.Hamster')
+        self.bus.add_signal_receiver(self._on_toggle_called, 'ToggleCalled', 'io.github.HamsterProjekt.Hamster')
 
         self.bus.add_signal_receiver(self._on_dbus_connection_change, 'NameOwnerChanged',
-                                     'org.freedesktop.DBus', arg0='org.gnome.Hamster')
+                                     'org.freedesktop.DBus', arg0='io.github.HamsterProjekt.Hamster')
     @staticmethod
     def _to_dict(columns, result_list):
         return [dict(zip(columns, row)) for row in result_list]
@@ -82,9 +82,9 @@ class Storage(gobject.GObject):
     @property
     def conn(self):
         if not self._connection:
-            self._connection = dbus.Interface(self.bus.get_object('org.gnome.Hamster',
-                                                                  '/org/gnome/Hamster'),
-                                              dbus_interface='org.gnome.Hamster')
+            self._connection = dbus.Interface(self.bus.get_object('io.github.HamsterProjekt.Hamster',
+                                                                  '/io/github/HamsterProjekt/Hamster'),
+                                              dbus_interface='io.github.HamsterProjekt.Hamster')
             server_version = self._connection.Version()
             client_version = hamster.__version__
             if server_version != client_version:
@@ -102,7 +102,7 @@ class Storage(gobject.GObject):
                         pkill -f hamster-service
                         pkill -f hamster-windows-service
                         see also:
-                        https://github.com/projecthamster/hamster#kill-hamster-daemons
+                        https://github.com/HamsterProjekt/hamster#kill-hamster-daemons
                     """.format(server_version, client_version)
                     )
                 )

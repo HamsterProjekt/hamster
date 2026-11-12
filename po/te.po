@@ -443,7 +443,8 @@ msgid "Uncategorized"
 msgstr "వర్గాలు"
 
 #: ../src/hamster/about.py:42
-msgid "Project Hamster — track your time"
+#, fuzzy
+msgid "HamsterProjekt — track your time"
 msgstr "ప్రోజెక్టు హామ్‌స్టర్ — మీ సమయం జాడ తెలుసుకోండి"
 
 #: ../src/hamster/about.py:43
@@ -451,7 +452,8 @@ msgid "Copyright © 2007–2010 Toms Bauģis and others"
 msgstr "ముద్రణాధికారం © 2007–2010 టామ్స్ బౌగిస్ మరియు ఇతరులు"
 
 #: ../src/hamster/about.py:45
-msgid "Project Hamster Website"
+#, fuzzy
+msgid "HamsterProjekt Website"
 msgstr "ప్రాజెక్ట్ హామ్‌స్టర్ వెబ్‌సైటు"
 
 #: ../src/hamster/about.py:46

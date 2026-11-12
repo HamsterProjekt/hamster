@@ -259,7 +259,8 @@ msgid ""
 msgstr ""
 
 #: src/hamster/about.py:33
-msgid "Project Hamster — track your time"
+#, fuzzy
+msgid "HamsterProjekt — track your time"
 msgstr "Projet Hamster — Gérez votre emploi du temps"
 
 #: src/hamster/about.py:34
@@ -267,7 +268,8 @@ msgid "Copyright © 2007–2010 Toms Bauģis and others"
 msgstr "Copyright © 2007–2010 Toms Bauģis et autres"
 
 #: src/hamster/about.py:36
-msgid "Project Hamster Website"
+#, fuzzy
+msgid "HamsterProjekt Website"
 msgstr "Site Web du projet Hamster"
 
 #: src/hamster/about.py:37

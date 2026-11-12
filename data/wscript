@@ -13,9 +13,9 @@ from waflib import Logs
 def build(ctx):
     if not ctx.env.skip_gsettings:
         ctx(features='glib2',
-            settings_schema_files=['org.gnome.hamster.gschema.xml'])
+            settings_schema_files=['io.github.HamsterProjekt.Hamster.gschema.xml'])
 
-    filename = "org.gnome.Hamster.metainfo.xml"
+    filename = "io.github.HamsterProjekt.Hamster.metainfo.xml"
     ctx(features = "subst",
         source= "%s.in" % filename,
         target= "%s" % filename,
@@ -23,7 +23,7 @@ def build(ctx):
         install_path = "${DATADIR}/metainfo"
        )
 
-    filename = "org.gnome.Hamster.GUI.desktop"
+    filename = "io.github.HamsterProjekt.Hamster.GUI.desktop"
     ctx(features = "subst",
         source= "%s.in" % filename,
         target= "%s" % filename,
@@ -41,32 +41,32 @@ def build(ctx):
 
     # icons
     ctx.install_files('${DATADIR}/hamster/art', start_dir.ant_glob('art/*.png'))
-    ctx.install_files('${DATADIR}/icons/hicolor/16x16/apps',   'art/16x16/org.gnome.Hamster.GUI.png')
-    ctx.install_files('${DATADIR}/icons/hicolor/22x22/apps',   'art/22x22/org.gnome.Hamster.GUI.png')
-    ctx.install_files('${DATADIR}/icons/hicolor/24x24/apps',   'art/24x24/org.gnome.Hamster.GUI.png')
-    ctx.install_files('${DATADIR}/icons/hicolor/32x32/apps',   'art/32x32/org.gnome.Hamster.GUI.png')
-    ctx.install_files('${DATADIR}/icons/hicolor/48x48/apps',   'art/scalable/org.gnome.Hamster.GUI.png')
-    ctx.install_files('${DATADIR}/icons/hicolor/scalable/apps','art/scalable/org.gnome.Hamster.GUI.svg')
+    ctx.install_files('${DATADIR}/icons/hicolor/16x16/apps',   'art/16x16/io.github.HamsterProjekt.Hamster.GUI.png')
+    ctx.install_files('${DATADIR}/icons/hicolor/22x22/apps',   'art/22x22/io.github.HamsterProjekt.Hamster.GUI.png')
+    ctx.install_files('${DATADIR}/icons/hicolor/24x24/apps',   'art/24x24/io.github.HamsterProjekt.Hamster.GUI.png')
+    ctx.install_files('${DATADIR}/icons/hicolor/32x32/apps',   'art/32x32/io.github.HamsterProjekt.Hamster.GUI.png')
+    ctx.install_files('${DATADIR}/icons/hicolor/48x48/apps',   'art/scalable/io.github.HamsterProjekt.Hamster.GUI.png')
+    ctx.install_files('${DATADIR}/icons/hicolor/scalable/apps','art/scalable/io.github.HamsterProjekt.Hamster.GUI.svg')
 
     if not ctx.env.skip_icon_cache_update:
         ctx.add_post_fun(update_icon_cache)
 
     # dbus service files
     ctx(features="subst",
-        source= "org.gnome.Hamster.service.in",
-        target= "org.gnome.Hamster.service",
+        source= "io.github.HamsterProjekt.Hamster.service.in",
+        target= "io.github.HamsterProjekt.Hamster.service",
         install_path="${DATADIR}/dbus-1/services",
         )
 
     ctx(features="subst",
-        source= "org.gnome.Hamster.GUI.service.in",
-        target= "org.gnome.Hamster.GUI.service",
+        source= "io.github.HamsterProjekt.Hamster.GUI.service.in",
+        target= "io.github.HamsterProjekt.Hamster.GUI.service",
         install_path="${DATADIR}/dbus-1/services",
         )
 
     ctx(features="subst",
-        source= "org.gnome.Hamster.WindowServer.service.in",
-        target= "org.gnome.Hamster.WindowServer.service",
+        source= "io.github.HamsterProjekt.Hamster.WindowServer.service.in",
+        target= "io.github.HamsterProjekt.Hamster.WindowServer.service",
         install_path="${DATADIR}/dbus-1/services",
         )
 

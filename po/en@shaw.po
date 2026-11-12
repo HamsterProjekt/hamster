@@ -444,7 +444,8 @@ msgid "Uncategorized"
 msgstr "𐑒𐑨𐑑𐑩𐑜𐑪𐑮𐑰𐑟"
 
 #: ../src/hamster/about.py:42
-msgid "Project Hamster — track your time"
+#, fuzzy
+msgid "HamsterProjekt — track your time"
 msgstr "𐑐𐑮𐑩𐑡𐑧𐑒𐑑 ·𐑣𐑨𐑥𐑕𐑑𐑼 — 𐑑𐑮𐑨𐑒 𐑿𐑼 𐑑𐑲𐑥"
 
 #: ../src/hamster/about.py:43
@@ -453,7 +454,8 @@ msgid "Copyright © 2007–2010 Toms Bauģis and others"
 msgstr "𐑒𐑪𐑐𐑦𐑮𐑲𐑑 © 2007–2009 ·𐑑𐑪𐑥𐑟 ·𐑚𐑬𐑜𐑦𐑕 𐑯 𐑳𐑞𐑼𐑟"
 
 #: ../src/hamster/about.py:45
-msgid "Project Hamster Website"
+#, fuzzy
+msgid "HamsterProjekt Website"
 msgstr "𐑐𐑮𐑩𐑡𐑧𐑒𐑑 ·𐑣𐑨𐑥𐑕𐑑𐑼 𐑢𐑧𐑚𐑕𐑲𐑑"
 
 #: ../src/hamster/about.py:46

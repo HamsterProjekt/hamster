@@ -40,17 +40,17 @@ logger = default_logger(__file__)
 DBusMainLoop(set_as_default=True)
 loop = glib.MainLoop()
 
-if "org.gnome.Hamster" in dbus.SessionBus().list_names():
+if "io.github.HamsterProjekt.Hamster" in dbus.SessionBus().list_names():
     print("Found hamster-service already running, exiting")
     quit()
 
 
 class Storage(backend.Storage, dbus.service.Object):
-    __dbus_object_path__ = "/org/gnome/Hamster"
+    __dbus_object_path__ = "/io/github/HamsterProjekt/Hamster"
 
     def __init__(self, loop):
         self.bus = dbus.SessionBus()
-        bus_name = dbus.service.BusName("org.gnome.Hamster", bus=self.bus)
+        bus_name = dbus.service.BusName("io.github.HamsterProjekt.Hamster", bus=self.bus)
 
 
         dbus.service.Object.__init__(self, bus_name, self.__dbus_object_path__)
@@ -93,22 +93,22 @@ class Storage(backend.Storage, dbus.service.Object):
             print("`{}` has changed. Quitting!".format(__file__))
             self.Quit()
 
-    @dbus.service.signal("org.gnome.Hamster")
+    @dbus.service.signal("io.github.HamsterProjekt.Hamster")
     def TagsChanged(self): pass
     def tags_changed(self):
         self.TagsChanged()
 
-    @dbus.service.signal("org.gnome.Hamster")
+    @dbus.service.signal("io.github.HamsterProjekt.Hamster")
     def FactsChanged(self): pass
     def facts_changed(self):
         self.FactsChanged()
 
-    @dbus.service.signal("org.gnome.Hamster")
+    @dbus.service.signal("io.github.HamsterProjekt.Hamster")
     def ActivitiesChanged(self): pass
     def activities_changed(self):
         self.ActivitiesChanged()
 
-    @dbus.service.signal("org.gnome.Hamster")
+    @dbus.service.signal("io.github.HamsterProjekt.Hamster")
     def ToggleCalled(self): pass
     def toggle_called(self):
         self.toggle_called()
@@ -118,21 +118,21 @@ class Storage(backend.Storage, dbus.service.Object):
         self.FactsChanged()
         self.ActivitiesChanged()
 
-    @dbus.service.method("org.gnome.Hamster")
+    @dbus.service.method("io.github.HamsterProjekt.Hamster")
     def Quit(self):
         """
         Shutdown the service
         example:
             import dbus
-            obj = dbus.SessionBus().get_object("org.gnome.Hamster", "/org/gnome/Hamster")
-            service = dbus.Interface(obj, "org.gnome.Hamster")
+            obj = dbus.SessionBus().get_object("io.github.HamsterProjekt.Hamster", "/io/github/HamsterProjekt/Hamster")
+            service = dbus.Interface(obj, "io.github.HamsterProjekt.Hamster")
             service.Quit()
         """
         #log.logger.info("Hamster Service is being shutdown")
         self.mainloop.quit()
 
 
-    @dbus.service.method("org.gnome.Hamster")
+    @dbus.service.method("io.github.HamsterProjekt.Hamster")
     def Toggle(self):
         """Toggle visibility of the main application window.
            If several instances are available, it will toggle them all.
@@ -141,7 +141,7 @@ class Storage(backend.Storage, dbus.service.Object):
         self.ToggleCalled()
 
     # facts
-    @dbus.service.method("org.gnome.Hamster", in_signature='siib', out_signature='i')
+    @dbus.service.method("io.github.HamsterProjekt.Hamster", in_signature='siib', out_signature='i')
     def AddFact(self, fact_str, start_time, end_time, temporary):
         """Add fact specified by a string.
 
@@ -183,7 +183,7 @@ class Storage(backend.Storage, dbus.service.Object):
         return self.add_fact(fact)
 
 
-    @dbus.service.method("org.gnome.Hamster", in_signature='s', out_signature='i')
+    @dbus.service.method("io.github.HamsterProjekt.Hamster", in_signature='s', out_signature='i')
     def AddFactJSON(self, dbus_fact):
         """Add fact given in JSON format.
 
@@ -202,7 +202,7 @@ class Storage(backend.Storage, dbus.service.Object):
         return self.add_fact(fact)
 
 
-    @dbus.service.method("org.gnome.Hamster",
+    @dbus.service.method("io.github.HamsterProjekt.Hamster",
                          in_signature="si",
                          out_signature='bs')
     def CheckFact(self, dbus_fact, dbus_default_day):
@@ -231,7 +231,7 @@ class Storage(backend.Storage, dbus.service.Object):
         return success, message
 
 
-    @dbus.service.method("org.gnome.Hamster",
+    @dbus.service.method("io.github.HamsterProjekt.Hamster",
                          in_signature='i',
                          out_signature=fact_signature)
     def GetFact(self, fact_id):
@@ -240,7 +240,7 @@ class Storage(backend.Storage, dbus.service.Object):
         return to_dbus_fact(fact)
 
 
-    @dbus.service.method("org.gnome.Hamster",
+    @dbus.service.method("io.github.HamsterProjekt.Hamster",
                          in_signature='i',
                          out_signature="s")
     def GetFactJSON(self, fact_id):
@@ -252,7 +252,7 @@ class Storage(backend.Storage, dbus.service.Object):
         return to_dbus_fact_json(fact)
 
 
-    @dbus.service.method("org.gnome.Hamster", in_signature='isiib', out_signature='i')
+    @dbus.service.method("io.github.HamsterProjekt.Hamster", in_signature='isiib', out_signature='i')
     def UpdateFact(self, fact_id, fact, start_time, end_time, temporary):
         start_time = start_time or None
         if start_time:
@@ -264,7 +264,7 @@ class Storage(backend.Storage, dbus.service.Object):
         return self.update_fact(fact_id, fact, start_time, end_time, temporary)
 
 
-    @dbus.service.method("org.gnome.Hamster",
+    @dbus.service.method("io.github.HamsterProjekt.Hamster",
                          in_signature='is',
                          out_signature='i')
     def UpdateFactJSON(self, fact_id, dbus_fact):
@@ -280,7 +280,7 @@ class Storage(backend.Storage, dbus.service.Object):
         return self.update_fact(fact_id, fact)
 
 
-    @dbus.service.method("org.gnome.Hamster", in_signature='i')
+    @dbus.service.method("io.github.HamsterProjekt.Hamster", in_signature='i')
     def StopTracking(self, end_time):
         """Stops tracking the current activity"""
         end_time = end_time or None
@@ -289,19 +289,19 @@ class Storage(backend.Storage, dbus.service.Object):
         return self.stop_tracking(end_time)
 
 
-    @dbus.service.method("org.gnome.Hamster")
+    @dbus.service.method("io.github.HamsterProjekt.Hamster")
     def StopOrRestartTracking(self):
         """Stops or restarts tracking the last activity"""
         return self.stop_or_restart_tracking()
 
 
-    @dbus.service.method("org.gnome.Hamster", in_signature='i')
+    @dbus.service.method("io.github.HamsterProjekt.Hamster", in_signature='i')
     def RemoveFact(self, fact_id):
         """Remove fact from storage by it's ID"""
         return self.remove_fact(fact_id)
 
 
-    @dbus.service.method("org.gnome.Hamster",
+    @dbus.service.method("io.github.HamsterProjekt.Hamster",
                          in_signature='uus',
                          out_signature='a{}'.format(fact_signature))
     def GetFacts(self, start_date, end_date, search_terms):
@@ -326,7 +326,7 @@ class Storage(backend.Storage, dbus.service.Object):
         return [to_dbus_fact(fact) for fact in self.get_facts(start, end, search_terms)]
 
 
-    @dbus.service.method("org.gnome.Hamster",
+    @dbus.service.method("io.github.HamsterProjekt.Hamster",
                          in_signature='ss',
                          out_signature='as')
     def GetFactsJSON(self, dbus_range, search_terms):
@@ -348,7 +348,7 @@ class Storage(backend.Storage, dbus.service.Object):
                 for fact in self.get_facts(range, search_terms=search_terms)]
 
 
-    @dbus.service.method("org.gnome.Hamster", out_signature='a{}'.format(fact_signature))
+    @dbus.service.method("io.github.HamsterProjekt.Hamster", out_signature='a{}'.format(fact_signature))
     def GetTodaysFacts(self):
         """Gets facts of today,
            respecting hamster midnight. See GetFacts for return info.
@@ -358,7 +358,7 @@ class Storage(backend.Storage, dbus.service.Object):
         return [to_dbus_fact(fact) for fact in self.get_todays_facts()]
 
 
-    @dbus.service.method("org.gnome.Hamster", out_signature='as')
+    @dbus.service.method("io.github.HamsterProjekt.Hamster", out_signature='as')
     def GetTodaysFactsJSON(self):
         """Gets facts of the current hamster day.
 
@@ -368,41 +368,41 @@ class Storage(backend.Storage, dbus.service.Object):
 
 
     # categories
-    @dbus.service.method("org.gnome.Hamster", in_signature='s', out_signature = 'i')
+    @dbus.service.method("io.github.HamsterProjekt.Hamster", in_signature='s', out_signature = 'i')
     def AddCategory(self, name):
         return self.add_category(name)
 
-    @dbus.service.method("org.gnome.Hamster", in_signature='s', out_signature='i')
+    @dbus.service.method("io.github.HamsterProjekt.Hamster", in_signature='s', out_signature='i')
     def GetCategoryId(self, category):
         return self.get_category_id(category)
 
-    @dbus.service.method("org.gnome.Hamster", in_signature='is')
+    @dbus.service.method("io.github.HamsterProjekt.Hamster", in_signature='is')
     def UpdateCategory(self, id, name):
         self.update_category(id, name)
 
-    @dbus.service.method("org.gnome.Hamster", in_signature='i')
+    @dbus.service.method("io.github.HamsterProjekt.Hamster", in_signature='i')
     def RemoveCategory(self, id):
         self.remove_category(id)
 
-    @dbus.service.method("org.gnome.Hamster", out_signature='a(is)')
+    @dbus.service.method("io.github.HamsterProjekt.Hamster", out_signature='a(is)')
     def GetCategories(self):
         return [(category['id'], category['name']) for category in self.get_categories()]
 
 
     # activities
-    @dbus.service.method("org.gnome.Hamster", in_signature='si', out_signature = 'i')
+    @dbus.service.method("io.github.HamsterProjekt.Hamster", in_signature='si', out_signature = 'i')
     def AddActivity(self, name, category_id):
         return self.add_activity(name, category_id)
 
-    @dbus.service.method("org.gnome.Hamster", in_signature='isi')
+    @dbus.service.method("io.github.HamsterProjekt.Hamster", in_signature='isi')
     def UpdateActivity(self, id, name, category_id):
         self.update_activity(id, name, category_id)
 
-    @dbus.service.method("org.gnome.Hamster", in_signature='i')
+    @dbus.service.method("io.github.HamsterProjekt.Hamster", in_signature='i')
     def RemoveActivity(self, id):
         return self.remove_activity(id)
 
-    @dbus.service.method("org.gnome.Hamster", in_signature='i', out_signature='a(isis)')
+    @dbus.service.method("io.github.HamsterProjekt.Hamster", in_signature='i', out_signature='a(isis)')
     def GetCategoryActivities(self, category_id):
         return [(row['id'],
                  row['name'],
@@ -411,17 +411,17 @@ class Storage(backend.Storage, dbus.service.Object):
                       self.get_category_activities(category_id = category_id)]
 
 
-    @dbus.service.method("org.gnome.Hamster", in_signature='s', out_signature='a(ss)')
+    @dbus.service.method("io.github.HamsterProjekt.Hamster", in_signature='s', out_signature='a(ss)')
     def GetActivities(self, search = ""):
         return [(row['name'], row['category'] or '') for row in self.get_activities(search)]
 
 
-    @dbus.service.method("org.gnome.Hamster", in_signature='ii', out_signature = 'b')
+    @dbus.service.method("io.github.HamsterProjekt.Hamster", in_signature='ii', out_signature = 'b')
     def ChangeCategory(self, id, category_id):
         return self.change_category(id, category_id)
 
 
-    @dbus.service.method("org.gnome.Hamster", in_signature='sib', out_signature='a{sv}')
+    @dbus.service.method("io.github.HamsterProjekt.Hamster", in_signature='sib', out_signature='a{sv}')
     def GetActivityByName(self, activity, category_id, resurrect = True):
         category_id = category_id or None
         if activity:
@@ -430,22 +430,22 @@ class Storage(backend.Storage, dbus.service.Object):
             return {}
 
     # tags
-    @dbus.service.method("org.gnome.Hamster", in_signature='b', out_signature='a(isb)')
+    @dbus.service.method("io.github.HamsterProjekt.Hamster", in_signature='b', out_signature='a(isb)')
     def GetTags(self, only_autocomplete):
         return [(tag['id'], tag['name'], tag['autocomplete']) for tag in self.get_tags(only_autocomplete)]
 
 
-    @dbus.service.method("org.gnome.Hamster", in_signature='as', out_signature='a(isb)')
+    @dbus.service.method("io.github.HamsterProjekt.Hamster", in_signature='as', out_signature='a(isb)')
     def GetTagIds(self, tags):
         return [(tag['id'], tag['name'], tag['autocomplete']) for tag in self.get_tag_ids(tags)]
 
 
-    @dbus.service.method("org.gnome.Hamster", in_signature='s')
+    @dbus.service.method("io.github.HamsterProjekt.Hamster", in_signature='s')
     def SetTagsAutocomplete(self, tags):
         self.update_autocomplete_tags(tags)
 
 
-    @dbus.service.method("org.gnome.Hamster", out_signature='s')
+    @dbus.service.method("io.github.HamsterProjekt.Hamster", out_signature='s')
     def Version(self):
         return hamster.__version__
 
@@ -469,4 +469,11 @@ if __name__ == '__main__':
 
     print("hamster-service up")
     storage = Storage(loop)
+    # printed, not logged: it has to show in the journal at the default level,
+    # which is where to look when the facts end up in an unexpected place
+    if backend.__name__.endswith(".markdown"):
+        print("storage: Markdown files in '{}'".format(storage.directory), flush=True)
+    else:
+        print("storage: SQLite database '{}' (HAMSTER_STORAGE is not \"markdown\")"
+              .format(storage.db_path), flush=True)
     loop.run()

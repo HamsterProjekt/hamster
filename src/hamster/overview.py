@@ -2,20 +2,20 @@
 
 # Copyright (C) 2014 Toms Bauģis <toms.baugis at gmail.com>
 
-# This file is part of Project Hamster.
+# This file is part of HamsterProjekt.
 
-# Project Hamster is free software: you can redistribute it and/or modify
+# HamsterProjekt is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 
-# Project Hamster is distributed in the hope that it will be useful,
+# HamsterProjekt is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with Project Hamster.  If not, see <http://www.gnu.org/licenses/>.
+# along with HamsterProjekt.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
 import bisect
@@ -416,7 +416,7 @@ class Overview(Controller):
         self.prefs_dialog = None  # preferences dialog controller
 
         self.window.set_position(gtk.WindowPosition.CENTER)
-        self.window.set_default_icon_name("org.gnome.Hamster.GUI")
+        self.window.set_default_icon_name("io.github.HamsterProjekt.Hamster.GUI")
         self.window.set_default_size(700, 500)
 
         self.storage = hamster.client.Storage()

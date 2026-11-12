@@ -450,7 +450,8 @@ msgid "Uncategorized"
 msgstr "विभाग (_C)"
 
 #: ../src/hamster/about.py:42
-msgid "Project Hamster — track your time"
+#, fuzzy
+msgid "HamsterProjekt — track your time"
 msgstr "Hamster प्रकल्प— तुमचा वेळ नियंत्रीत करा"
 
 #: ../src/hamster/about.py:43
@@ -459,7 +460,8 @@ msgid "Copyright © 2007–2010 Toms Bauģis and others"
 msgstr "सर्वहक्काधिकार © 2007–2009 Toms Baugis व इतर"
 
 #: ../src/hamster/about.py:45
-msgid "Project Hamster Website"
+#, fuzzy
+msgid "HamsterProjekt Website"
 msgstr "प्रकल्प Hamster संकेतस्थळ"
 
 #: ../src/hamster/about.py:46

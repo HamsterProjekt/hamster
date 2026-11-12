@@ -2,20 +2,20 @@
 
 # Copyright (C) 2007, 2008 Toms Bauģis <toms.baugis at gmail.com>
 
-# This file is part of Project Hamster.
+# This file is part of HamsterProjekt.
 
-# Project Hamster is free software: you can redistribute it and/or modify
+# HamsterProjekt is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 
-# Project Hamster is distributed in the hope that it will be useful,
+# HamsterProjekt is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with Project Hamster.  If not, see <http://www.gnu.org/licenses/>.
+# along with HamsterProjekt.  If not, see <http://www.gnu.org/licenses/>.
 
 
 from os.path import join
@@ -30,10 +30,10 @@ class About(object):
         infos = {
             "program-name" : "Hamster",
             "version" : runtime.version,
-            "comments" : _("Project Hamster — track your time"),
+            "comments" : _("HamsterProjekt — track your time"),
             "copyright" : _("Copyright © 2007–2010 Toms Bauģis and others"),
-            "website" : "https://github.com/projecthamster/hamster/wiki/",
-            "website-label" : _("Project Hamster Website"),
+            "website" : "https://github.com/HamsterProjekt/hamster",
+            "website-label" : _("HamsterProjekt Website"),
             "title": _("About Time Tracker"),
             "wrap-license": True
         }
@@ -49,7 +49,7 @@ class About(object):
         for prop, val in infos.items():
             about.set_property(prop, val)
 
-        about.set_logo_icon_name("org.gnome.Hamster.GUI")
+        about.set_logo_icon_name("io.github.HamsterProjekt.Hamster.GUI")
 
         about.connect("response", lambda self, *args: self.destroy())
         about.show_all()

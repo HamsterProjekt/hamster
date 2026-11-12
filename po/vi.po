@@ -462,7 +462,7 @@ msgstr "_Loại"
 
 #: ../src/hamster/about.py:42
 #, fuzzy
-msgid "Project Hamster — track your time"
+msgid "HamsterProjekt — track your time"
 msgstr "Dự án Hamster — theo dõi thời gian làm"
 
 #: ../src/hamster/about.py:43
@@ -472,7 +472,7 @@ msgstr "Tác quyền © năm 2007-2008 của Toms Baugis và người khác"
 
 #: ../src/hamster/about.py:45
 #, fuzzy
-msgid "Project Hamster Website"
+msgid "HamsterProjekt Website"
 msgstr "Trang Web Hamster"
 
 #: ../src/hamster/about.py:46

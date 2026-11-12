@@ -466,7 +466,8 @@ msgstr "categorie"
 
 # (ndt) sarebbe l'unica applet ad avere il suo nome nella descrizione quando viene selezionata. Lunga, molto molto libera, ma che palle...
 #: ../src/hamster/about.py:42
-msgid "Project Hamster — track your time"
+#, fuzzy
+msgid "HamsterProjekt — track your time"
 msgstr "Tiene traccia del tempo trascorso nello svolgere delle attività"
 
 #: ../src/hamster/about.py:43
@@ -474,7 +475,8 @@ msgid "Copyright © 2007–2010 Toms Bauģis and others"
 msgstr "Copyright © 2007–2010 Toms Bauģis e altri"
 
 #: ../src/hamster/about.py:45
-msgid "Project Hamster Website"
+#, fuzzy
+msgid "HamsterProjekt Website"
 msgstr "Pagina web di «Poject Hamster»"
 
 # (ndt) titolo dialogo
