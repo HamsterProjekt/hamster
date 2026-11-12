@@ -420,9 +420,11 @@ sudo ./waf uninstall
 
 1. [Fork](https://github.com/HamsterProjekt/hamster/fork) this project
 2. Create a topic branch - `git checkout -b my_branch`
-3. Push to your branch - `git push origin my_branch`
-4. Submit a [Pull Request](https://github.com/HamsterProjekt/hamster/pulls) with your branch
-5. That's it!
+3. Commit with a sign-off - `git commit -s`; every commit needs one (the
+   [Developer Certificate of Origin](https://developercertificate.org/))
+4. Push to your branch - `git push origin my_branch`
+5. Submit a [Pull Request](https://github.com/HamsterProjekt/hamster/pulls) with your branch
+6. That's it!
 
 See [How to contribute](https://github.com/HamsterProjekt/.github/blob/main/CONTRIBUTING.md) for more information.
 
