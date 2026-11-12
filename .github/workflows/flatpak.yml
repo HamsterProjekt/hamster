@@ -2,6 +2,8 @@
 # Pull requests get the bundle as a build artifact; every merge to main
 # also publishes it as a new release, so that the latest one is always at
 # https://github.com/HamsterProjekt/hamster/releases/latest/download/hamster.flatpak
+# and pushes it to GitHub Packages as ghcr.io/hamsterprojekt/hamster-flatpak
+# (tags: latest and the release's version).
 name: Flatpak
 on:
   push:
@@ -19,6 +21,7 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       contents: write   # to publish the release
+      packages: write   # to push the bundle to ghcr.io
     env:
       FLATPAK_WORK: ${{ github.workspace }}/../flatpak-work
     steps:
@@ -44,12 +47,14 @@ jobs:
         with:
           name: hamster-flatpak
           path: hamster.flatpak
+      - name: Set the version
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        run: echo "version=$(date -u +%Y.%m.%d).${{ github.run_number }}" >> "$GITHUB_ENV"
       - name: Publish a release
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          version="$(date -u +%Y.%m.%d).${{ github.run_number }}"
           gh release create "flatpak-$version" hamster.flatpak \
             --target "$GITHUB_SHA" --latest \
             --title "Hamster $version (Flatpak)" \
@@ -60,3 +65,19 @@ jobs:
               flatpak install --user hamster.flatpak
 
           The runtime comes from Flathub."
+      - name: Install oras
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: oras-project/setup-oras@v1
+      - name: Push the bundle to GitHub Packages
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "$GH_TOKEN" | oras login ghcr.io -u "${{ github.actor }}" --password-stdin
+          oras push "ghcr.io/hamsterprojekt/hamster-flatpak:$version,latest" \
+            --artifact-type application/vnd.flatpak.bundle \
+            --annotation "org.opencontainers.image.source=https://github.com/HamsterProjekt/hamster" \
+            --annotation "org.opencontainers.image.revision=$GITHUB_SHA" \
+            --annotation "org.opencontainers.image.version=$version" \
+            --annotation "org.opencontainers.image.licenses=GPL-3.0-or-later" \
+            hamster.flatpak:application/vnd.flatpak.bundle

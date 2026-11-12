@@ -328,6 +328,16 @@ wget https://github.com/HamsterProjekt/hamster/releases/latest/download/hamster.
 flatpak install --user hamster.flatpak
 ```
 
+The same bundle is also published under the repository's
+[Packages](https://github.com/HamsterProjekt/hamster/pkgs/container/hamster-flatpak),
+as `ghcr.io/hamsterprojekt/hamster-flatpak`, tagged `latest` and with each
+release's version. Fetch it with [oras](https://oras.land/):
+
+```bash
+oras pull ghcr.io/hamsterprojekt/hamster-flatpak:latest
+flatpak install --user hamster.flatpak
+```
+
 The flatpak built from this repository is `io.github.HamsterProjekt.Hamster`.
 The commands below that name `org.gnome.Hamster` are for upstream's
 Flathub package; use the fork's id instead for the one you built.
