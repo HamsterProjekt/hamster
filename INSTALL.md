@@ -14,6 +14,11 @@ these ways:
 
 Before any of them, [stop a Hamster that is running](#stop-a-running-hamster).
 
+**SQLite or Markdown?** The service of this fork can store your data in
+either. SQLite is the default; the first two ways above set up Markdown.
+Any of them can be switched afterwards, see
+[Switching between SQLite and Markdown](#switching-between-sqlite-and-markdown).
+
 ## Stop a running Hamster
 
 A running service keeps answering until it is stopped, so a newly installed
@@ -171,7 +176,7 @@ This is the installation of upstream Hamster, with its GTK windows and the
    ```
 
    Then stop the running service. Without this file, Hamster works as
-   upstream.
+   upstream, with SQLite.
 
 To uninstall: `sudo python3 ./waf uninstall` from the same checkout, and
 remove the service file of step 3 if you made it.
@@ -179,6 +184,49 @@ remove the service file of step 3 if you made it.
 The build with waf was not tried on Python 3.12 or newer for this fork.
 If `configure` fails there, use one of the two other ways; they do not
 need waf.
+
+## Switching between SQLite and Markdown
+
+The storage is chosen by `HAMSTER_STORAGE` in the `Exec` line of the
+service file that D-Bus uses to start the service:
+
+    ~/.local/share/dbus-1/services/org.gnome.Hamster.service
+
+With `HAMSTER_STORAGE=markdown` in it, the service uses the Markdown files;
+without it, SQLite. The two keep separate data, and neither is converted
+into the other, so back up `~/.local/share/hamster/hamster.db` before
+experimenting.
+
+**To use SQLite**, remove `/usr/bin/env HAMSTER_STORAGE=markdown ` from the
+`Exec` line, so that it reads for instance:
+
+    Exec=/usr/bin/python3 /home/you/projects/hamster/src/hamster-service.py
+
+or, with the system-wide installation, delete the file altogether: the
+installed service file then applies, and it uses SQLite.
+
+**To use Markdown**, put it back:
+
+    Exec=/usr/bin/env HAMSTER_STORAGE=markdown /usr/bin/python3 /home/you/projects/hamster/src/hamster-service.py
+
+Either way, stop the running service afterwards; D-Bus starts it again with
+the new storage on the next call:
+
+```bash
+pkill -f hamster-service
+```
+
+To check which storage is used, look at what the service printed when it
+started:
+
+```bash
+journalctl --user -b | grep 'storage:'
+```
+
+With hamster-kde you do not need to edit the file: its installer takes
+`--sqlite` or `--markdown` (`./install.sh --sqlite`), and keeps the chosen
+storage when run again without an option. hamster-kde works the same on
+both storages.
 
 ## When something does not work
 

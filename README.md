@@ -24,16 +24,40 @@ stays the default, and the GTK windows are untouched.
 To install the fork, see [INSTALL.md](INSTALL.md). The packages named
 further down are those of upstream Hamster, without the Markdown backend.
 
-## The Markdown backend
+## Choosing the storage: SQLite or Markdown
 
-The backend is chosen when the service starts:
+The service has two storage backends. Which one it uses is decided by the
+`HAMSTER_STORAGE` environment variable when the service starts:
+
+| `HAMSTER_STORAGE` | Storage | Where the data is |
+|---|---|---|
+| not set, or anything but `markdown` | SQLite (the default, as upstream) | `~/.local/share/hamster/hamster.db` |
+| `markdown` | Markdown files | `~/.local/share/hamster/markdown/` |
 
 ```bash
-HAMSTER_STORAGE=markdown python3 src/hamster-service.py
+python3 src/hamster-service.py                            # SQLite
 ```
 
-With [hamster-kde](https://github.com/HamsterProjekt/hamster-kde), its installer sets this up (the service is then started
-on demand by D-Bus); see the README there.
+```bash
+HAMSTER_STORAGE=markdown python3 src/hamster-service.py   # Markdown
+```
+
+On startup the service prints which one it uses, for instance
+`storage: SQLite database '/home/you/.local/share/hamster/hamster.db'`.
+
+Normally you do not start the service yourself: D-Bus starts it on demand
+from the `Exec` line of a service file. The installer of
+[hamster-kde](https://github.com/HamsterProjekt/hamster-kde) and the
+per-user steps in [INSTALL.md](INSTALL.md) write that file with
+`HAMSTER_STORAGE=markdown`. See
+[Switching between SQLite and Markdown](INSTALL.md#switching-between-sqlite-and-markdown)
+to change it.
+
+The two backends do not share data, and there is no migration in either
+direction: switching starts you on an empty (or the other) set of facts.
+Nothing is deleted, so switching back brings the old data back.
+
+## The Markdown backend
 
 The files are in `~/.local/share/hamster/markdown`:
 
