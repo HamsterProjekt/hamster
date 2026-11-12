@@ -59,7 +59,7 @@ $builder "$@" "$work/build" "$manifest"
 
 if [ "$test" = yes ]; then
     # from the top of the checkout, where the tests are
-    (cd "$here" && dbus-run-session -- $builder --run --state-dir="$work/state" \
+    (cd "$here" && dbus-run-session -- $builder --run \
         "$work/build" "$manifest" python3 -m unittest)
 fi
 
