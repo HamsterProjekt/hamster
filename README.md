@@ -1,6 +1,8 @@
 # Hamster - Time Tracker, with a Markdown backend for KDE
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=HamsterProjekt_hamster&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=HamsterProjekt_hamster)
+[![Testing](https://github.com/HamsterProjekt/hamster/actions/workflows/testing.yml/badge.svg?branch=main)](https://github.com/HamsterProjekt/hamster/actions/workflows/testing.yml?query=branch%3Amain)
+[![Flatpak](https://github.com/HamsterProjekt/hamster/actions/workflows/flatpak.yml/badge.svg?branch=main)](https://github.com/HamsterProjekt/hamster/actions/workflows/flatpak.yml?query=branch%3Amain)
+[![Quality gate status](https://sonarcloud.io/api/project_badges/measure?project=HamsterProjekt_hamster&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=HamsterProjekt_hamster)
 [![AI Code Assurance](https://sonarcloud.io/api/project_badges/ai_code_assurance?project=HamsterProjekt_hamster)](https://sonarcloud.io/summary/new_code?id=HamsterProjekt_hamster)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=HamsterProjekt_hamster&metric=coverage)](https://sonarcloud.io/summary/new_code?id=HamsterProjekt_hamster)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=HamsterProjekt_hamster&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=HamsterProjekt_hamster)
