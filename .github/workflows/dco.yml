@@ -1,7 +1,8 @@
 # Developer Certificate of Origin (https://developercertificate.org/):
 # every commit of a pull request must have a "Signed-off-by:" line with the
 # name and e-mail of its author, as `git commit --signoff` (-s) adds. Merge
-# commits are not checked. See CONTRIBUTING.md in HamsterProjekt/.github.
+# commits are not checked, nor are Dependabot's own commits in the pull
+# requests that Dependabot opens. See CONTRIBUTING.md in HamsterProjekt/.github.
 name: DCO
 on:
   pull_request:
@@ -23,11 +24,16 @@ jobs:
         env:
           BASE: ${{ github.event.pull_request.base.sha }}
           HEAD: ${{ github.event.pull_request.head.sha }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
         run: |
           missing=0
           for commit in $(git rev-list --no-merges "$BASE..$HEAD"); do
             author="$(git log -1 --format='%an <%ae>' "$commit")"
-            if git log -1 --format='%B' "$commit" | grep -qixF "Signed-off-by: $author"; then
+            if [ "$PR_AUTHOR" = "dependabot[bot]" ] &&
+               [ "$author" = "dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>" ]; then
+              # Dependabot only bumps versions, and can't sign off
+              echo "ok      $(git log -1 --format='%h %s' "$commit") (Dependabot)"
+            elif git log -1 --format='%B' "$commit" | grep -qixF "Signed-off-by: $author"; then
               echo "ok      $(git log -1 --format='%h %s' "$commit")"
             else
               echo "::error::$(git log -1 --format='%h' "$commit") has no 'Signed-off-by: $author' line"
