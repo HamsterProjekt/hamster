@@ -319,6 +319,14 @@ class TestDatetime(unittest.TestCase):
         expected = dt.datetime(2018, 8, 14, 0, 10)  # 2018-08-14 00:10
         self.assertEqual(dt.datetime.from_day_time(day, time), expected)
 
+    def test_from_utc_timestamp(self):
+        # 2026-11-12 14:02:30 UTC, naive and rounded down to the minute
+        moment = dt.datetime.from_utc_timestamp(1794492150)
+        self.assertEqual(moment, dt.datetime(2026, 11, 12, 14, 2))
+        self.assertIsInstance(moment, dt.datetime)
+        self.assertIsNone(moment.tzinfo)
+        self.assertEqual(dt.datetime.from_utc_timestamp(0), dt.datetime(1970, 1, 1))
+
     def test_format_timedelta(self):
         delta = dt.timedelta(minutes=10)
         self.assertEqual(delta.format("human"), "10min")
