@@ -143,8 +143,8 @@ class Storage(storage.Storage):
                                .format(db_path, data_dir))
                 copyfile(os.path.join(data_dir, 'hamster.db'), db_path)
 
-            #change also permissions - sometimes they are 444
-            os.chmod(db_path, 0o664)
+            # make sure we can write it (sometimes it is 444); only the user needs access
+            os.chmod(db_path, 0o600)
 
         db_path = os.path.realpath(db_path)  # needed for file monitoring?
 

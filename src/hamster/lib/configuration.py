@@ -155,7 +155,8 @@ class GSettingsStore(gobject.GObject, Singleton):
         """
         value = self._settings.get_value(key)
         if value is None:
-            logger.warn("Unknown GSettings key: %s" % key)
+            logger.warning("Unknown GSettings key: %s" % key)
+            return default
 
         return value.unpack()
 

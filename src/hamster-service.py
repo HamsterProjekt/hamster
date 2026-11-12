@@ -111,7 +111,7 @@ class Storage(backend.Storage, dbus.service.Object):
     @dbus.service.signal("io.github.HamsterProjekt.Hamster")
     def ToggleCalled(self): pass
     def toggle_called(self):
-        self.toggle_called()
+        self.ToggleCalled()
 
     def dispatch_overwrite(self):
         self.TagsChanged()
@@ -161,7 +161,7 @@ class Storage(backend.Storage, dbus.service.Object):
         Returns:
             fact id (int), 0 means failure.
 
-        Note: see datetime.utcfromtimestamp documentation
+        Note: see datetime.from_utc_timestamp
               for the precise meaning of timestamps.
         """
         fact = Fact.parse(fact_str)
@@ -173,12 +173,12 @@ class Storage(backend.Storage, dbus.service.Object):
         if start_time == -1:
             fact.start_time = None
         elif start_time != 0:
-            fact.start_time = dt.datetime.utcfromtimestamp(start_time)
+            fact.start_time = dt.datetime.from_utc_timestamp(start_time)
 
         if end_time == -1:
             fact.end_time = None
         elif end_time != 0:
-            fact.end_time = dt.datetime.utcfromtimestamp(end_time)
+            fact.end_time = dt.datetime.from_utc_timestamp(end_time)
 
         return self.add_fact(fact)
 
@@ -256,11 +256,11 @@ class Storage(backend.Storage, dbus.service.Object):
     def UpdateFact(self, fact_id, fact, start_time, end_time, temporary):
         start_time = start_time or None
         if start_time:
-            start_time = dt.datetime.utcfromtimestamp(start_time)
+            start_time = dt.datetime.from_utc_timestamp(start_time)
 
         end_time = end_time or None
         if end_time:
-            end_time = dt.datetime.utcfromtimestamp(end_time)
+            end_time = dt.datetime.from_utc_timestamp(end_time)
         return self.update_fact(fact_id, fact, start_time, end_time, temporary)
 
 
@@ -285,7 +285,7 @@ class Storage(backend.Storage, dbus.service.Object):
         """Stops tracking the current activity"""
         end_time = end_time or None
         if end_time:
-            end_time = dt.datetime.utcfromtimestamp(end_time)
+            end_time = dt.datetime.from_utc_timestamp(end_time)
         return self.stop_tracking(end_time)
 
 
@@ -317,11 +317,11 @@ class Storage(backend.Storage, dbus.service.Object):
         #TODO: Assert start > end ?
         start = dt.date.today()
         if start_date:
-            start = dt.datetime.utcfromtimestamp(start_date).date()
+            start = dt.datetime.from_utc_timestamp(start_date).date()
 
         end = None
         if end_date:
-            end = dt.datetime.utcfromtimestamp(end_date).date()
+            end = dt.datetime.from_utc_timestamp(end_date).date()
 
         return [to_dbus_fact(fact) for fact in self.get_facts(start, end, search_terms)]
 
