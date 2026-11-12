@@ -127,8 +127,19 @@ This is the main repo. It is standalone (single module).
 All other repositories -`hamster-lib/dbus/cli/gtk`- are part of the separate rewrite effort.  
 More context is given in the history section below.
 
-Some additional information is available in the
+Some additional information is available in Project Hamster's
 [wiki](https://github.com/projecthamster/hamster/wiki).
+
+## Bugs and questions
+
+Report bugs in the fork, and in the KDE port's backend, in this repository's
+[Issues](https://github.com/HamsterProjekt/hamster/issues). Ask questions and
+share ideas in its [Discussions](https://github.com/HamsterProjekt/hamster/discussions).
+Problems with the Plasma widget or the Qt windows belong in
+[hamster-kde](https://github.com/HamsterProjekt/hamster-kde/issues).
+
+Upstream's issue tracker is for upstream Project Hamster; please don't report
+problems with this fork there.
 
 ## Installation
 
@@ -328,7 +339,7 @@ To undo the last install, just
 sudo ./waf uninstall
 ```
 Afterwards `find /usr -iname hamster` should only list unrelated files (if any).
-Otherwise, please see the [wiki section](https://github.com/projecthamster/hamster/wiki/Tips-and-Tricks#uninstall)
+Otherwise, please see the [upstream wiki section](https://github.com/projecthamster/hamster/wiki/Tips-and-Tricks#uninstall)
 
 ##### Flatpak
 
@@ -340,7 +351,9 @@ flatpak uninstall org.gnome.Hamster
 
 #### Troubleshooting
 
-[wiki section](https://github.com/projecthamster/hamster/wiki/Tips-and-Tricks#troubleshooting)
+See the [upstream wiki section](https://github.com/projecthamster/hamster/wiki/Tips-and-Tricks#troubleshooting).
+If that does not help, open an [issue](https://github.com/HamsterProjekt/hamster/issues)
+or ask in [Discussions](https://github.com/HamsterProjekt/hamster/discussions).
 
 #### Development
 
