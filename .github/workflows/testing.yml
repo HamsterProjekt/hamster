@@ -22,7 +22,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Prepare repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Install system packages
         run: |
           sudo apt-get update
@@ -48,7 +48,7 @@ jobs:
           python3 -m coverage xml -o coverage.xml
       - name: Upload the coverage report
         if: matrix.os == 'ubuntu-latest'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: coverage
           path: coverage.xml
@@ -64,13 +64,13 @@ jobs:
     steps:
       - name: Prepare repo
         if: env.SONAR_TOKEN != ''
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           # full history, so that new code and blame are right
           fetch-depth: 0
       - name: Download the coverage report
         if: env.SONAR_TOKEN != ''
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: coverage
       - name: Scan
@@ -82,9 +82,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Prepare repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: '3.12'
       - name: Install flake8
