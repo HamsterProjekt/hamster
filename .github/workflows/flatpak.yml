@@ -40,6 +40,14 @@ jobs:
           path: ${{ env.FLATPAK_WORK }}/state
           key: flatpak-state-${{ hashFiles('flatpak/*.yml') }}
           restore-keys: flatpak-state-
+      - name: Set the version
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        # tagged here so that `git describe` in the build gives the release's
+        # version; `gh release create` below pushes the same tag
+        run: |
+          version="$(date -u +%Y.%m.%d).${{ github.run_number }}"
+          echo "version=$version" >> "$GITHUB_ENV"
+          git tag "flatpak-$version"
       - name: Build, test and bundle
         run: flatpak/build.sh --no-install --test --bundle
       - name: Upload the bundle
@@ -47,9 +55,6 @@ jobs:
         with:
           name: hamster-flatpak
           path: hamster.flatpak
-      - name: Set the version
-        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-        run: echo "version=$(date -u +%Y.%m.%d).${{ github.run_number }}" >> "$GITHUB_ENV"
       - name: Publish a release
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         env:

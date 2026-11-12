@@ -65,7 +65,7 @@ fi
 
 if [ "$bundle" = yes ]; then
     flatpak build-bundle --runtime-repo=https://dl.flathub.org/repo/flathub.flatpakrepo \
-        "$work/repo" "$bundle_file" "$id"
+        "$work/repo" "$bundle_file" "$id" stable
     echo "Bundle written to $bundle_file"
 fi
 if [ "$install" = yes ]; then
