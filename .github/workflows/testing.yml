@@ -75,7 +75,7 @@ jobs:
           name: coverage
       - name: Scan
         if: env.SONAR_TOKEN != ''
-        uses: SonarSource/sonarqube-scan-action@v8
+        uses: SonarSource/sonarqube-scan-action@e805d875275f728fac1885b413934be6d7c63f65  # v8.4.1
 
   flake8:
     name: Run code linting and checks
