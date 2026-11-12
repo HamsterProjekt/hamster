@@ -1,0 +1,44 @@
+# Developer Certificate of Origin (https://developercertificate.org/):
+# every commit of a pull request must have a "Signed-off-by:" line with the
+# name and e-mail of its author, as `git commit --signoff` (-s) adds. Merge
+# commits are not checked. See CONTRIBUTING.md in HamsterProjekt/.github.
+name: DCO
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  dco:
+    name: DCO
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepare repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Check that every commit is signed off by its author
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          missing=0
+          for commit in $(git rev-list --no-merges "$BASE..$HEAD"); do
+            author="$(git log -1 --format='%an <%ae>' "$commit")"
+            if git log -1 --format='%B' "$commit" | grep -qixF "Signed-off-by: $author"; then
+              echo "ok      $(git log -1 --format='%h %s' "$commit")"
+            else
+              echo "::error::$(git log -1 --format='%h' "$commit") has no 'Signed-off-by: $author' line"
+              echo "missing $(git log -1 --format='%h %s' "$commit")"
+              missing=$((missing + 1))
+            fi
+          done
+          if [ "$missing" -gt 0 ]; then
+            echo
+            echo "$missing commit(s) are not signed off. Add the line with:"
+            echo "    git rebase --signoff $BASE"
+            echo "and push the branch again (git push --force-with-lease)."
+            exit 1
+          fi
