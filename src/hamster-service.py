@@ -469,4 +469,11 @@ if __name__ == '__main__':
 
     print("hamster-service up")
     storage = Storage(loop)
+    # printed, not logged: it has to show in the journal at the default level,
+    # which is where to look when the facts end up in an unexpected place
+    if backend.__name__.endswith(".markdown"):
+        print("storage: Markdown files in '{}'".format(storage.directory), flush=True)
+    else:
+        print("storage: SQLite database '{}' (HAMSTER_STORAGE is not \"markdown\")"
+              .format(storage.db_path), flush=True)
     loop.run()
