@@ -28,3 +28,5 @@ hamster-time-tracker-*.tar.gz
 .lock-waf*
 build
 *.deb
+/hamster.flatpak
+.flatpak-builder/

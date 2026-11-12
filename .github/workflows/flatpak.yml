@@ -1,0 +1,62 @@
+# Builds the Flatpak (flatpak/build.sh) and runs the tests inside it.
+# Pull requests get the bundle as a build artifact; every merge to main
+# also publishes it as a new release, so that the latest one is always at
+# https://github.com/HamsterProjekt/hamster/releases/latest/download/hamster.flatpak
+name: Flatpak
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: flatpak-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  flatpak:
+    name: Build the Flatpak
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write   # to publish the release
+    env:
+      FLATPAK_WORK: ${{ github.workspace }}/../flatpak-work
+    steps:
+      - name: Prepare repo
+        uses: actions/checkout@v4
+        with:
+          # the version shown in the about dialog comes from git describe
+          fetch-depth: 0
+      - name: Install flatpak and flatpak-builder
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y flatpak flatpak-builder dbus
+      - name: Cache the downloads of flatpak-builder
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.FLATPAK_WORK }}/state
+          key: flatpak-state-${{ hashFiles('flatpak/*.yml') }}
+          restore-keys: flatpak-state-
+      - name: Build, test and bundle
+        run: flatpak/build.sh --no-install --test --bundle
+      - name: Upload the bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: hamster-flatpak
+          path: hamster.flatpak
+      - name: Publish a release
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version="$(date -u +%Y.%m.%d).${{ github.run_number }}"
+          gh release create "flatpak-$version" hamster.flatpak \
+            --target "$GITHUB_SHA" --latest \
+            --title "Hamster $version (Flatpak)" \
+            --notes "Flatpak of HamsterProjekt's Hamster, built from $GITHUB_SHA.
+
+          Install it for your user with:
+
+              flatpak install --user hamster.flatpak
+
+          The runtime comes from Flathub."

@@ -268,11 +268,11 @@ If familiar with github, just clone the repo and `cd` into it.
 
 ##### Download
 
-Otherwise, to get the `master` development branch (intended to be quite stable):
+Otherwise, to get the `main` development branch (intended to be quite stable):
 ```bash
-wget https://github.com/HamsterProjekt/hamster/archive/master.zip
-unzip master.zip
-cd hamster-master
+wget https://github.com/HamsterProjekt/hamster/archive/main.zip
+unzip main.zip
+cd hamster-main
 ```
 or a specific [release](https://github.com/projecthamster/hamster/releases):
 ```bash
@@ -296,18 +296,26 @@ Now restart your panels/docks and you should be able to add Hamster!
 
 ##### Flatpak
 
-Alternatively, you can also build a sandboxed
-[flatpak](https://www.flatpak.org/) yourself. You might need to install the
-GNOME SDK beforehand (an error will notify you about it, if needed). Execute:
+Alternatively, you can build a sandboxed [flatpak](https://www.flatpak.org/)
+yourself. It needs `flatpak-builder`; the GNOME SDK is downloaded from
+Flathub on the first build. Execute:
 
 ```bash
-flatpak-builder --force-clean --user --install \
-    build/flatpak data/io.github.HamsterProjekt.Hamster.flatpak.yml
+flatpak/build.sh
 ```
 
-This creates a temporary flatpack build folder in the ``build/flatpak``
-directory. Once the app is installed, the whole ``build/flatpack/`` directory
-can be removed.
+This builds in ``~/.cache/hamster-flatpak`` and installs the flatpak for your
+user. `flatpak/build.sh --bundle` also writes `hamster.flatpak`, a single
+file to install on another computer; `flatpak/build.sh --help` lists the
+options.
+
+Every merge to `main` also builds the flatpak on GitHub and publishes it as a
+release. The latest one installs with:
+
+```bash
+wget https://github.com/HamsterProjekt/hamster/releases/latest/download/hamster.flatpak
+flatpak install --user hamster.flatpak
+```
 
 The flatpak built from this repository is `io.github.HamsterProjekt.Hamster`.
 The commands below that name `org.gnome.Hamster` are for upstream's
@@ -378,8 +386,7 @@ run:
 To run the tests inside the flatpak, use:
 
 ```bash
-flatpak-builder --run build/flatpak data/io.github.HamsterProjekt.Hamster.flatpak.yml \
-    python3 -m unittest
+flatpak/build.sh --test
 ```
 
 #### Migrating

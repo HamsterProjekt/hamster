@@ -11,6 +11,7 @@ these ways:
 |---|---|---|
 | [With hamster-kde](#with-hamster-kde) (recommended) | The service with the Markdown storage, the Plasma widget and the Qt windows | Only for the packages |
 | [The service only, for your user](#the-service-only-for-your-user) | The service with the Markdown storage, for clients of the fork such as hamster-kde | Only for the packages |
+| [As a Flatpak](#as-a-flatpak) | All of Hamster with its GTK windows, in a sandbox; SQLite | No |
 | [System-wide with waf](#system-wide-with-waf) | All of Hamster with its GTK windows, installed like upstream; SQLite unless you switch | Yes |
 
 Before any of them, [stop a Hamster that is running](#stop-a-running-hamster).
@@ -213,6 +214,33 @@ remove the service file of step 3 if you made it.
 The build with waf was not tried on Python 3.12 or newer for this fork.
 If `configure` fails there, use one of the two other ways; they do not
 need waf.
+
+## As a Flatpak
+
+The Flatpak `io.github.HamsterProjekt.Hamster` has the service and the GTK
+windows, with the SQLite storage. Every merge to `main` publishes a new
+one as a release on GitHub. To install the latest:
+
+```bash
+wget https://github.com/HamsterProjekt/hamster/releases/latest/download/hamster.flatpak
+```
+
+```bash
+flatpak install --user hamster.flatpak
+```
+
+```bash
+flatpak run io.github.HamsterProjekt.Hamster
+```
+
+The runtime comes from Flathub. To build it yourself from the checkout
+instead, with `flatpak-builder` installed: `flatpak/build.sh` (see
+`flatpak/build.sh --help`). To uninstall:
+`flatpak uninstall io.github.HamsterProjekt.Hamster`; your data in
+`~/.var/app/io.github.HamsterProjekt.Hamster` stays.
+
+For the KDE windows and the Markdown storage, use the Flatpak of
+[hamster-kde](https://github.com/HamsterProjekt/hamster-kde) instead.
 
 ## Switching between SQLite and Markdown
 
