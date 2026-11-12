@@ -36,8 +36,46 @@ jobs:
           python3 ./waf configure build
           sudo python3 ./waf install
       - name: Run tests
+        if: matrix.os != 'ubuntu-latest'
         run: |
           dbus-launch python3 -m unittest
+      - name: Run tests with coverage
+        # One run measures coverage, for SonarQube Cloud.
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get install -y python3-coverage
+          dbus-launch python3 -m coverage run --source=src -m unittest
+          python3 -m coverage xml -o coverage.xml
+      - name: Upload the coverage report
+        if: matrix.os == 'ubuntu-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage.xml
+
+  sonarcloud:
+    # Analyses the code on SonarQube Cloud, with the coverage of the tests.
+    # Skipped without the SONAR_TOKEN secret, as in pull requests from forks.
+    name: SonarQube Cloud analysis
+    needs: test
+    runs-on: ubuntu-latest
+    env:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    steps:
+      - name: Prepare repo
+        if: env.SONAR_TOKEN != ''
+        uses: actions/checkout@v4
+        with:
+          # full history, so that new code and blame are right
+          fetch-depth: 0
+      - name: Download the coverage report
+        if: env.SONAR_TOKEN != ''
+        uses: actions/download-artifact@v4
+        with:
+          name: coverage
+      - name: Scan
+        if: env.SONAR_TOKEN != ''
+        uses: SonarSource/sonarqube-scan-action@e805d875275f728fac1885b413934be6d7c63f65  # v8.4.1
 
   flake8:
     name: Run code linting and checks
