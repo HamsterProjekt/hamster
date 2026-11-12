@@ -452,7 +452,8 @@ msgid "Uncategorized"
 msgstr "_ഇനങ്ങള്‍"
 
 #: ../src/hamster/about.py:42
-msgid "Project Hamster — track your time"
+#, fuzzy
+msgid "HamsterProjekt — track your time"
 msgstr "ഹാമ്സ്റ്റര്‍ നിങ്ങളുടെ സമയം നിരീക്ഷിക്കുന്നു"
 
 #: ../src/hamster/about.py:43
@@ -461,7 +462,8 @@ msgid "Copyright © 2007–2010 Toms Bauģis and others"
 msgstr "പകര്‍പ്പവകാശം © 2007–2009 ടോം ബോഗിസ്സും മറ്റുള്ളവരും"
 
 #: ../src/hamster/about.py:45
-msgid "Project Hamster Website"
+#, fuzzy
+msgid "HamsterProjekt Website"
 msgstr "പ്രൊജക്ട് ഹാംസ്റ്റര്‍ വെബ്സൈറ്റ് "
 
 #: ../src/hamster/about.py:46

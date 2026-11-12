@@ -1,8 +1,9 @@
 # Hamster - Time Tracker, with a Markdown backend for KDE
 
-This is a fork of [Project Hamster](https://github.com/projecthamster/hamster),
-the time tracker for individuals. It is the backend of a port of Hamster to
-KDE Plasma, and is not an official Project Hamster release.
+This is the [HamsterProjekt](https://github.com/HamsterProjekt) fork of
+[Project Hamster](https://github.com/projecthamster/hamster), the time
+tracker for individuals. It is the backend of a port of Hamster to KDE
+Plasma, and is not an official Project Hamster release.
 
 What the fork adds:
 
@@ -16,10 +17,16 @@ The KDE side is in the separate
 [hamster-kde](https://github.com/HamsterProjekt/hamster-kde) repository: a Plasma 6 panel
 widget, and the overview, edit and settings windows written with Qt Quick and
 Kirigami. They talk to the Hamster service of this repository over D-Bus, as
-Hamster's own windows and the GNOME shell extension do.
+Hamster's own windows do.
 
 Everything of Hamster is still here and works as before: the SQLite storage
 stays the default, and the GTK windows are untouched.
+
+The fork has its own names, so it no longer claims upstream Hamster's:
+the D-Bus services, the settings schema, the application and the icon are
+`io.github.HamsterProjekt.Hamster` (and `.GUI`, `.WindowServer`) instead of
+upstream's `org.gnome.Hamster`. Clients written for upstream, such as the
+GNOME shell extension, do not see the fork's service.
 
 To install the fork, see [INSTALL.md](INSTALL.md). The packages named
 further down are those of upstream Hamster, without the Markdown backend.
@@ -81,7 +88,7 @@ backend differs from the SQLite one, is described at the top of
 
 ### Another folder, several computers
 
-The folder is the `markdown-directory` key of the `org.gnome.Hamster`
+The folder is the `markdown-directory` key of the `io.github.HamsterProjekt.Hamster`
 settings (the tracking settings of `hamster-kde` have a button for it); the
 `HAMSTER_MARKDOWN_DIR` environment variable overrides it. It can be a folder
 synchronised by OneDrive, Dropbox, Nextcloud or the like.
@@ -263,7 +270,7 @@ If familiar with github, just clone the repo and `cd` into it.
 
 Otherwise, to get the `master` development branch (intended to be quite stable):
 ```bash
-wget https://github.com/projecthamster/hamster/archive/master.zip
+wget https://github.com/HamsterProjekt/hamster/archive/master.zip
 unzip master.zip
 cd hamster-master
 ```
@@ -295,12 +302,16 @@ GNOME SDK beforehand (an error will notify you about it, if needed). Execute:
 
 ```bash
 flatpak-builder --force-clean --user --install \
-    build/flatpak data/org.gnome.Hamster.flatpak.yml
+    build/flatpak data/io.github.HamsterProjekt.Hamster.flatpak.yml
 ```
 
 This creates a temporary flatpack build folder in the ``build/flatpak``
 directory. Once the app is installed, the whole ``build/flatpack/`` directory
 can be removed.
+
+The flatpak built from this repository is `io.github.HamsterProjekt.Hamster`.
+The commands below that name `org.gnome.Hamster` are for upstream's
+Flathub package; use the fork's id instead for the one you built.
 
 #### Uninstall
 
@@ -367,7 +378,7 @@ run:
 To run the tests inside the flatpak, use:
 
 ```bash
-flatpak-builder --run build/flatpak data/org.gnome.Hamster.flatpak.yml \
+flatpak-builder --run build/flatpak data/io.github.HamsterProjekt.Hamster.flatpak.yml \
     python3 -m unittest
 ```
 
@@ -400,13 +411,13 @@ sudo ./waf uninstall
 
 ## Contributing
 
-1. [Fork](https://github.com/projecthamster/hamster/fork) this project
+1. [Fork](https://github.com/HamsterProjekt/hamster/fork) this project
 2. Create a topic branch - `git checkout -b my_branch`
 3. Push to your branch - `git push origin my_branch`
-4. Submit a [Pull Request](https://github.com/projecthamster/hamster/pulls) with your branch
+4. Submit a [Pull Request](https://github.com/HamsterProjekt/hamster/pulls) with your branch
 5. That's it!
 
-See [How to contribute](https://github.com/projecthamster/hamster/wiki/How-to-contribute) for more information.
+See [How to contribute](https://github.com/HamsterProjekt/.github/blob/main/CONTRIBUTING.md) for more information.
 
 
 ## History

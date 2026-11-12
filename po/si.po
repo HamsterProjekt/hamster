@@ -457,7 +457,8 @@ msgid "Uncategorized"
 msgstr "ප්‍ර‍භේදයන් (_C)"
 
 #: ../src/hamster/about.py:42
-msgid "Project Hamster — track your time"
+#, fuzzy
+msgid "HamsterProjekt — track your time"
 msgstr ""
 
 #: ../src/hamster/about.py:43
@@ -467,7 +468,7 @@ msgstr "ප්‍රකාශන හිමිකම් © 2007-2008 Toms Baugis 
 
 #: ../src/hamster/about.py:45
 #, fuzzy
-msgid "Project Hamster Website"
+msgid "HamsterProjekt Website"
 msgstr "Hamster වෙබ් "
 
 #: ../src/hamster/about.py:46

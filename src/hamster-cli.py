@@ -5,20 +5,20 @@
 # Copyright (C) 2010-2012 Toms Bauģis <toms.baugis@gmail.com>
 # Copyright (C) 2012 Ted Smith <tedks at cs.umd.edu>
 
-# This file is part of Project Hamster.
+# This file is part of HamsterProjekt.
 
-# Project Hamster is free software: you can redistribute it and/or modify
+# HamsterProjekt is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 
-# Project Hamster is distributed in the hope that it will be useful,
+# HamsterProjekt is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with Project Hamster.  If not, see <http://www.gnu.org/licenses/>.
+# along with HamsterProjekt.  If not, see <http://www.gnu.org/licenses/>.
 
 '''A script to control the applet from the command line.'''
 
@@ -99,10 +99,10 @@ class Hamster(gtk.Application):
     """Hamster gui.
 
     Actions should eventually be accessible via Gio.DBusActionGroup
-    with the 'org.gnome.Hamster.GUI' id.
+    with the 'io.github.HamsterProjekt.Hamster.GUI' id.
     but that is still experimental, the actions API is subject to change.
     Discussion with "external" developers welcome !
-    The separate dbus org.gnome.Hamster.WindowServer
+    The separate dbus io.github.HamsterProjekt.Hamster.WindowServer
     is still the stable recommended way to show windows for now.
     """
 
@@ -110,7 +110,7 @@ class Hamster(gtk.Application):
         # inactivity_timeout: How long (ms) the service should stay alive
         #                     after all windows have been closed.
         gtk.Application.__init__(self,
-                                 application_id="org.gnome.Hamster.GUI",
+                                 application_id="io.github.HamsterProjekt.Hamster.GUI",
                                  #inactivity_timeout=10000,
                                  register_session=True)
 

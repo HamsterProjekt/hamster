@@ -460,7 +460,7 @@ msgstr "ห_มวด"
 
 #: ../src/hamster/about.py:42
 #, fuzzy
-msgid "Project Hamster — track your time"
+msgid "HamsterProjekt — track your time"
 msgstr "โครงการ Hamster - ติดตามการใช้เวลาของคุณ"
 
 #: ../src/hamster/about.py:43
@@ -470,7 +470,7 @@ msgstr "สงวนลิขสิทธิ์ © 2007-2008 Toms Baugis แล�
 
 #: ../src/hamster/about.py:45
 #, fuzzy
-msgid "Project Hamster Website"
+msgid "HamsterProjekt Website"
 msgstr "เว็บไซต์ของ Hamster"
 
 #: ../src/hamster/about.py:46

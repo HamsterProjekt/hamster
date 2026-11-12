@@ -449,7 +449,8 @@ msgid "Uncategorized"
 msgstr "ವರ್ಗಗಳು(_C)"
 
 #: ../src/hamster/about.py:42
-msgid "Project Hamster — track your time"
+#, fuzzy
+msgid "HamsterProjekt — track your time"
 msgstr "ಪರಿಯೋಜನೆ Hamster — ನಿಮ್ಮ ಸಮಯದ ಜಾಡನ್ನು ಇರಿಸಿಕೊಳ್ಳಿ"
 
 #: ../src/hamster/about.py:43
@@ -458,7 +459,8 @@ msgid "Copyright © 2007–2010 Toms Bauģis and others"
 msgstr "ಹಕ್ಕು © 2007–2009 Toms Bauģis ಹಾಗು ಇತರರು"
 
 #: ../src/hamster/about.py:45
-msgid "Project Hamster Website"
+#, fuzzy
+msgid "HamsterProjekt Website"
 msgstr "ಪರಿಯೋಜನೆ ಹ್ಯಾಮ್‌ಸ್ಟರ್ ಜಾಲತಾಣ"
 
 #: ../src/hamster/about.py:46

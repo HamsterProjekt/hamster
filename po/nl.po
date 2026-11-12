@@ -468,7 +468,7 @@ msgstr "_Categorieën"
 
 #: ../src/hamster/about.py:42
 #, fuzzy
-msgid "Project Hamster — track your time"
+msgid "HamsterProjekt — track your time"
 msgstr "Project Hamster — uw tijd bijhouden"
 
 #: ../src/hamster/about.py:43
@@ -478,7 +478,7 @@ msgstr "Copyright © 2007–2008 Toms Baugis en anderen"
 
 #: ../src/hamster/about.py:45
 #, fuzzy
-msgid "Project Hamster Website"
+msgid "HamsterProjekt Website"
 msgstr "Hamster-website"
 
 #: ../src/hamster/about.py:46

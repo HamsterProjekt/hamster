@@ -15,29 +15,29 @@ import hamster
 DBusGMainLoop(set_as_default=True)
 loop = glib.MainLoop()
 
-if "org.gnome.Hamster.WindowServer" in dbus.SessionBus().list_names():
+if "io.github.HamsterProjekt.Hamster.WindowServer" in dbus.SessionBus().list_names():
     print("Found hamster-window-service already running, exiting")
     quit()
 
 
 # Legacy server. Still used by the shell-extension.
-# New code _could_ access the org.gnome.Hamster.GUI actions directly,
+# New code _could_ access the io.github.HamsterProjekt.Hamster.GUI actions directly,
 # although the exact action names/data are subject to change.
 # http://lazka.github.io/pgi-docs/Gio-2.0/classes/Application.html#Gio.Application
 # > The actions are also exported on the session bus,
 #   and GIO provides the Gio.DBusActionGroup wrapper
 #   to conveniently access them remotely.
 class WindowServer(dbus.service.Object):
-    __dbus_object_path__ = "/org/gnome/Hamster/WindowServer"
+    __dbus_object_path__ = "/io/github/HamsterProjekt/Hamster/WindowServer"
 
     def __init__(self, loop):
         self.app = True
         self.mainloop = loop
         self.bus = dbus.SessionBus()
-        bus_name = dbus.service.BusName("org.gnome.Hamster.WindowServer", bus=self.bus)
+        bus_name = dbus.service.BusName("io.github.HamsterProjekt.Hamster.WindowServer", bus=self.bus)
         dbus.service.Object.__init__(self, bus_name, self.__dbus_object_path__)
 
-    @dbus.service.method("org.gnome.Hamster")
+    @dbus.service.method("io.github.HamsterProjekt.Hamster")
     def Quit(self):
         """Shutdown the service"""
         self.mainloop.quit()
@@ -52,7 +52,7 @@ class WindowServer(dbus.service.Object):
         cmd = "{} {} &".format(base_cmd, name)
         subprocess.run(cmd, shell=True)
 
-    @dbus.service.method("org.gnome.Hamster.WindowServer")
+    @dbus.service.method("io.github.HamsterProjekt.Hamster.WindowServer")
     def edit(self, id: int = 0):
         """Edit fact, given its id (int) in the database.
 
@@ -64,15 +64,15 @@ class WindowServer(dbus.service.Object):
         else:
             self._open_window("add")
 
-    @dbus.service.method("org.gnome.Hamster.WindowServer")
+    @dbus.service.method("io.github.HamsterProjekt.Hamster.WindowServer")
     def overview(self):
         self._open_window("overview")
 
-    @dbus.service.method("org.gnome.Hamster.WindowServer")
+    @dbus.service.method("io.github.HamsterProjekt.Hamster.WindowServer")
     def about(self):
         self._open_window("about")
 
-    @dbus.service.method("org.gnome.Hamster.WindowServer")
+    @dbus.service.method("io.github.HamsterProjekt.Hamster.WindowServer")
     def preferences(self):
         self._open_window("prefs")
 

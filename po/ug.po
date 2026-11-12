@@ -445,7 +445,8 @@ msgid "Uncategorized"
 msgstr "كاتېگورىيىلەر"
 
 #: ../src/hamster/about.py:42
-msgid "Project Hamster — track your time"
+#, fuzzy
+msgid "HamsterProjekt — track your time"
 msgstr "Hamster قۇرۇلۇشى — ۋاقتىڭىزنى ئىزلاڭ"
 
 #: ../src/hamster/about.py:43
@@ -453,7 +454,8 @@ msgid "Copyright © 2007–2010 Toms Bauģis and others"
 msgstr "نەشر ھوقۇقى © 2007–2010 Toms Bauģis ۋە باشقىلارغا تەۋە"
 
 #: ../src/hamster/about.py:45
-msgid "Project Hamster Website"
+#, fuzzy
+msgid "HamsterProjekt Website"
 msgstr "Hamster قۇرۇلۇشى تورتۇراسى"
 
 #: ../src/hamster/about.py:46

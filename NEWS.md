@@ -1,5 +1,17 @@
 ## Unreleased changes
 
+HamsterProjekt fork:
+
+* The fork has its own names. The D-Bus services, interfaces and object
+  paths, the settings schema, the application id, the desktop file and the
+  icon are now `io.github.HamsterProjekt.Hamster` (`.GUI`, `.WindowServer`)
+  instead of `org.gnome.Hamster`, so the fork and upstream Hamster no
+  longer claim the same D-Bus names and settings. Clients written for upstream, such as the GNOME shell
+  extension, do not talk to it. Settings are not carried over by themselves;
+  see "Upgrading from the old names" in INSTALL.md.
+* A storage backend that keeps everything in Markdown files, and a service
+  that runs without GTK.
+
 
 ## Changes in 3.0.3 (2023-11-19)
 After a long hiatus and slow development, finally a hamster release

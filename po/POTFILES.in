@@ -3,8 +3,8 @@
 data/date_range.ui
 data/edit_activity.ui
 data/preferences.ui
-data/org.gnome.Hamster.GUI.desktop.in
-data/org.gnome.hamster.gschema.xml
+data/io.github.HamsterProjekt.Hamster.GUI.desktop.in
+data/io.github.HamsterProjekt.Hamster.gschema.xml
 src/hamster-cli.py
 src/hamster/about.py
 src/hamster/edit_activity.py
