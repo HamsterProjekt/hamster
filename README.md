@@ -123,6 +123,50 @@ can be lost, or end up in a conflict copy that Hamster does not read.
 python3 -m unittest tests.test_markdown_storage
 ```
 
+## AI assistants: the MCP server
+
+`hamster-mcp` is a [Model Context Protocol](https://modelcontextprotocol.io)
+server, so that an AI assistant (Claude Code, Claude Desktop, or any MCP
+client) can read and change your time tracking. It speaks MCP on stdio and
+talks to the running service over D-Bus, like the command line does: it
+works with either storage, and the open windows show the changes at once.
+It needs nothing beyond Hamster's own dependencies.
+
+| | Tools |
+|---|---|
+| Facts | `list_facts`, `get_fact`, `add_fact`, `update_fact`, `delete_fact`, `stop_tracking` |
+| Activities | `list_activities`, `add_activity`, `update_activity`, `delete_activity` |
+| Categories | `list_categories`, `add_category`, `update_category`, `delete_category` |
+
+Times are local, as `YYYY-MM-DD HH:MM`; `HH:MM` alone is today and `-15`
+is a quarter of an hour ago. A fact without an end is the one being
+tracked. `update_fact` gives the fact a new id, which it returns.
+Deleting an activity keeps its facts; deleting a category moves its
+activities to no category.
+
+Register it with your client, for instance with Claude Code:
+
+```bash
+claude mcp add hamster -- hamster-mcp
+```
+
+or in the `mcpServers` of a JSON configuration (Claude Desktop and others):
+
+```json
+{"mcpServers": {"hamster": {"command": "hamster-mcp"}}}
+```
+
+From the sources, use `python3 /path/to/hamster/src/hamster-mcp.py` as the
+command, and with the Flatpak
+`flatpak run --command=hamster-mcp io.github.HamsterProjekt.Hamster`.
+`--log DEBUG` logs to stderr. With the Markdown storage, fact ids change
+when the service restarts, so list the facts again rather than reusing old
+ids.
+
+```bash
+python3 -m unittest tests.test_mcp_server
+```
+
 ---
 
 The rest of this README is that of Project Hamster.

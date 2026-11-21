@@ -67,6 +67,7 @@ def build(ctx):
     ctx.install_as('${LIBEXECDIR}/hamster/hamster-service', "src/hamster-service.py", chmod=Utils.O755)
     ctx.install_as('${LIBEXECDIR}/hamster/hamster-windows-service', "src/hamster-windows-service.py", chmod=Utils.O755)
     ctx.install_as('${BINDIR}/hamster', "src/hamster-cli.py", chmod=Utils.O755)
+    ctx.install_as('${BINDIR}/hamster-mcp', "src/hamster-mcp.py", chmod=Utils.O755)
 
 
     ctx.install_files('${PREFIX}/share/bash-completion/completions',
